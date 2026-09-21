@@ -7,7 +7,7 @@ const uploadProfileImage = async (
 	buffer: Buffer,
 	userId: string,
 ) => {
-	// Check current user and existing profile image
+	
 	const currentUser = await prisma.user.findUnique({
 		where: {
 			id: userId,
@@ -28,7 +28,7 @@ const uploadProfileImage = async (
 		throw new Error("User account has been deleted");
 	}
 
-	// Upload new image to Cloudinary
+	
 	const cloudinaryResult =
 		await new Promise<UploadApiResponse>(
 			(resolve, reject) => {
@@ -66,7 +66,7 @@ const uploadProfileImage = async (
 			},
 		);
 
-	// Update user's profile image
+	
 	const updatedUser = await prisma.user.update({
 		where: {
 			id: userId,
@@ -82,7 +82,7 @@ const uploadProfileImage = async (
 		},
 	});
 
-	// Delete old profile image from Cloudinary
+	
 	if (currentUser.imagePublicId) {
 		try {
 			await cloudinary.uploader.destroy(

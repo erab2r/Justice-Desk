@@ -772,11 +772,6 @@ const isValidStatusTransition = (
     );
 };
 
-/*
-|--------------------------------------------------------------------------
-| Change Case Status
-|--------------------------------------------------------------------------
-*/
 
 const changeCaseStatus = async (
     caseId: string,
@@ -796,11 +791,7 @@ const changeCaseStatus = async (
         );
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Ownership
-    |--------------------------------------------------------------------------
-    */
+
 
     if (user.role === Role.LAWYER) {
         const lawyer = await prisma.lawyer.findUnique({
@@ -824,11 +815,6 @@ const changeCaseStatus = async (
         }
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Only Lawyer/Admin/Super Admin
-    |--------------------------------------------------------------------------
-    */
 
     if (user.role === Role.CLIENT) {
         throw new AppError(
@@ -905,11 +891,6 @@ const changeCaseStatus = async (
     return updatedCase;
 };
 
-/*
-|--------------------------------------------------------------------------
-| Assign Lawyer
-|--------------------------------------------------------------------------
-*/
 
 const assignLawyer = async (
     caseId: string,
@@ -1024,11 +1005,6 @@ const assignLawyer = async (
     return updatedCase;
 };
 
-/*
-|--------------------------------------------------------------------------
-| Close Case
-|--------------------------------------------------------------------------
-*/
 
 const closeCase = async (
     caseId: string,
@@ -1043,11 +1019,6 @@ const closeCase = async (
     );
 };
 
-/*
-|--------------------------------------------------------------------------
-| Delete Case
-|--------------------------------------------------------------------------
-*/
 
 const deleteCase = async (
     caseId: string,

@@ -468,9 +468,6 @@ const getAvailableLawyerByTodaysSchedule = async (query: IQuery) => {
   );
   const startOfTomorrow = addDays(startOfToday, 1);
 
-  // A lawyer is "available today" if they have at least one published,
-  // not-yet-started schedule today with open slots left.
-
   const andConditions: LawyerWhereInput[] = [
     { isDeleted: false },
     { verificationStatus: LawyerVerificationStatus.APPROVED },
@@ -675,7 +672,7 @@ export const LawyerServices = {
   getAvailableLawyerByTodaysSchedule,
   getAllLawyersListPublic,
   getSingleLawyerPublicProfile,
-};// lawyer apply koratse j password koi pabo 
+};
 
 
 

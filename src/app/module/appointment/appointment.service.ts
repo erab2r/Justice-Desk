@@ -3,7 +3,6 @@ import httpStatus from "http-status";
 import type Stripe from "stripe";
 import { Prisma } from "../../../../prisma/generated/prisma/client";
 
-// import { ApppointmentWhereInput } from "../../../generated/prisma/models";
 import config from "../../config";
 import { IQuery } from "../../interfaces";
 import { getBkashIdToken } from "../../lib/bkash";
@@ -133,7 +132,7 @@ const bookAppointment = async (payload: IBookAppointmentPayload, user: RequestUs
 			},
 		});
 
-		// ---- STRIPE (price created directly in BDT — no conversion) ----
+	
 		if (payload.paymentGateway === PaymentGateway.STRIPE) {
 			const session = await createStripeCheckoutSession(
 				appointment.id,
@@ -248,8 +247,7 @@ const payAppointment = async (payload: IPayAppointmentPayload, user: RequestUser
 		throw new AppError(httpStatus.BAD_REQUEST, "Appointment Payment Is Already Completed");
 	}
 
-	// Stripe Checkout URLs are single-use and may be completed or expired.
-	// Always create a fresh Stripe session when a pending appointment is retried.
+
 	if (
 		existingAppointment.payment?.paymentGateway === payload.paymentGateway &&
 		payload.paymentGateway !== PaymentGateway.STRIPE
@@ -297,7 +295,7 @@ const payAppointment = async (payload: IPayAppointmentPayload, user: RequestUser
 		};
 	}
 
-	// ---- BKASH (default / unchanged) ----
+	
 	const bkashIdToken = await getBkashIdToken();
 
 	if (!bkashIdToken) {

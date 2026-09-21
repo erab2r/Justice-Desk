@@ -22,14 +22,14 @@ router.get(
   LawyerNoteControllers.getNotesByCase,
 );
 
-// Get a single note
+
 router.get(
   "/:noteId",
   auth(Role.CLIENT, Role.LAWYER, Role.ADMIN, Role.SUPER_ADMIN),
   LawyerNoteControllers.getNoteById,
 );
 
-// Update a note
+
 router.patch(
   "/:noteId",
   auth(Role.LAWYER, Role.ADMIN, Role.SUPER_ADMIN),
@@ -37,7 +37,7 @@ router.patch(
   LawyerNoteControllers.updateNote,
 );
 
-// Delete a note
+
 router.delete(
   "/:noteId",
   auth(Role.LAWYER, Role.ADMIN, Role.SUPER_ADMIN),

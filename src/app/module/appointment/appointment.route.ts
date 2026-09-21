@@ -48,14 +48,6 @@ router.get("/stripe/cancel", (_req, res) => {
 	});
 });
 
-// Stripe webhook — MUST receive the raw body (not JSON-parsed) for
-// signature verification to succeed. If your app.ts applies
-// express.json() globally before routes are mounted, exclude this
-// exact path from it, e.g.:
-//   app.use((req, res, next) => {
-//     if (req.originalUrl === "/api/appointment/stripe/webhook") return next();
-//     return express.json()(req, res, next);
-//   });
 router.post(
 	"/stripe/webhook",
 	express.raw({ type: "application/json" }),
