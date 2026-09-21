@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lawyer Application Approved</title>
+
+```
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f7f7f7;
+    color: #333333;
+  }
+
+  .container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #e6f7ec;
+    color: #17a34a;
+    font-size: 26px;
+    font-weight: bold;
+  }
+
+  h2 {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    color: #222222;
+  }
+
+  p {
+    line-height: 1.6;
+    margin: 12px 0;
+  }
+
+  .footer {
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #eeeeee;
+    font-size: 12px;
+    color: #888888;
+    text-align: center;
+  }
+</style>
+```
+
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="icon">&#10003;</div>
+
+```
+  <h2>
+    Congratulations, <%= name %>!
+  </h2>
+
+  <p>
+    Your application to join
+    <strong>Justice Desk</strong>
+    as a lawyer has been reviewed and approved.
+  </p>
+
+  <p>
+    You can now log in to your Justice Desk account and start offering
+    legal consultations, managing your schedule, handling client
+    appointments, and managing your legal cases.
+  </p>
+   <p>You can now log in using the following credentials:</p>
+
+  <p>
+    <strong>Email:</strong> <%= email %>
+  </p>
+
+  <p>
+    <strong>Temporary Password:</strong> <%= temporaryPassword %>
+  </p>
+
+  <p>
+    For security reasons, you must change your password after your first login.
+  </p>
+
+  <p>
+    Please keep your temporary password secure and do not share it with anyone.
+  </p>
+
+  <p>
+    Welcome to Justice Desk. We look forward to having you as part of
+    our legal professional community.
+  </p>
+
+  <div class="footer">
+    &copy; <%= new Date().getFullYear() %> Justice Desk.
+    All rights reserved.
+  </div>
+</div>
+```
+
+  </body>
+</html>

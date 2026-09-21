@@ -1,0 +1,44 @@
+model Appointment {
+  id String @id @default(uuid())
+
+  status AppointmentStatus @default(PENDING)
+
+  joiningTime DateTime?
+  serialNumber Int?
+
+  meetingLink String?
+  recordUrl String?
+  recordPublicId String?
+
+  videoSession VideoSession?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  clientId String
+  client Client @relation(fields: [clientId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+  lawyerId String
+  lawyer Lawyer @relation(fields: [lawyerId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+  scheduleId String
+  schedule Schedule @relation(fields: [scheduleId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+  payment Payment?
+
+  case Case?
+
+  @@unique([scheduleId, serialNumber],name: "unique_appointment_serial_number")
+
+  @@index([clientId, lawyerId, scheduleId],name: "idx_appointment_client_lawyer_schedule")
+
+  @@index([clientId],name: "idx_appointment_client")
+
+  @@index([lawyerId],name: "idx_appointment_lawyer")
+
+  @@index([scheduleId],name: "idx_appointment_schedule")
+
+  @@index([status],name: "idx_appointment_status")
+
+  @@map("appointments")
+}

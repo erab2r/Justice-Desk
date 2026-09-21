@@ -1,0 +1,32 @@
+model Schedule {
+  id String @id @default(uuid())
+
+  startDateTime DateTime
+  endDateTime   DateTime
+
+  meetingLink String?
+
+  totalSlots     Int
+  availableSlots Int
+
+  status ScheduleStatus @default(DRAFT)
+
+  isDeleted Boolean   @default(false)
+  deletedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Lawyer relation
+  lawyerId String
+  lawyer   Lawyer @relation(fields: [lawyerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  // Appointments
+  appointments Appointment[]
+
+  @@unique([lawyerId, startDateTime, endDateTime], name: "unique_schedule")
+  @@index([lawyerId], name: "idx_schedule_lawyer")
+  @@index([startDateTime], name: "idx_schedule_startDateTime")
+  @@index([status], name: "idx_schedule_status")
+  @@map("schedules")
+}

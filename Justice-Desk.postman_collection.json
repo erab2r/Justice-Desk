@@ -1,0 +1,461 @@
+{
+  "info": {
+    "_postman_id": "4eaf7f6a-7e44-4b72-9f4d-justice-desk",
+    "name": "Justice Desk API",
+    "description": "Postman collection for the Justice Desk lawyer and legal case management API. Set baseUrl, credentials, and resource IDs in collection variables. Schedules use one time range with a lawyer-provided totalSlots capacity; appointments receive sequential serial numbers when payment is confirmed.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000" },
+    { "key": "accessToken", "value": "" },
+    { "key": "refreshToken", "value": "" },
+    { "key": "clientEmail", "value": "client@example.com" },
+    { "key": "clientPassword", "value": "Client@12345" },
+    { "key": "lawyerEmail", "value": "lawyer@example.com" },
+    { "key": "lawyerPassword", "value": "Lawyer@12345" },
+    { "key": "adminEmail", "value": "admin@example.com" },
+    { "key": "adminPassword", "value": "Admin@12345" },
+    { "key": "otp", "value": "123456" },
+    { "key": "googleIdToken", "value": "replace-with-google-id-token" },
+    { "key": "scheduleId", "value": "replace-with-schedule-id" },
+    { "key": "appointmentId", "value": "replace-with-appointment-id" },
+    { "key": "paymentId", "value": "replace-with-payment-id" },
+    { "key": "lawyerId", "value": "replace-with-lawyer-id" },
+    { "key": "specializationId", "value": "replace-with-specialization-id" },
+    { "key": "secondSpecializationId", "value": "replace-with-second-specialization-id" },
+    { "key": "specializationRequestId", "value": "replace-with-specialization-request-id" },
+    { "key": "caseId", "value": "replace-with-case-id" },
+    { "key": "activityId", "value": "replace-with-activity-id" },
+    { "key": "messageId", "value": "replace-with-message-id" },
+    { "key": "reportId", "value": "replace-with-report-id" },
+    { "key": "invoiceId", "value": "replace-with-invoice-id" },
+    { "key": "noteId", "value": "replace-with-note-id" },
+    { "key": "documentId", "value": "replace-with-document-id" },
+    { "key": "paymentGateway", "value": "STRIPE" }
+  ],
+  "item": [
+    {
+      "name": "Health and Public",
+      "item": [
+        {
+          "name": "GET Root",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/" }
+        },
+        {
+          "name": "GET bKash Test Token",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/test" }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register Client",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Test Client\",\n  \"email\": \"{{clientEmail}}\",\n  \"password\": \"{{clientPassword}}\",\n  \"client\": {\n    \"contactNumber\": \"+8801712345678\",\n    \"address\": \"Dhaka, Bangladesh\",\n    \"gender\": \"OTHER\",\n    \"dateOfBirth\": \"1995-01-15\"\n  }\n}" },
+            "url": "{{baseUrl}}/api/v1/auth/register"
+          }
+        },
+        {
+          "name": "Verify Client Email",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{clientEmail}}\",\n  \"otp\": \"{{otp}}\"\n}" },
+            "url": "{{baseUrl}}/api/v1/auth/verify-email"
+          }
+        },
+        {
+          "name": "Login Client",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json?.data?.accessToken) pm.collectionVariables.set('accessToken', json.data.accessToken);", "if (json?.data?.refreshToken) pm.collectionVariables.set('refreshToken', json.data.refreshToken);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{clientEmail}}\",\n  \"password\": \"{{clientPassword}}\"\n}" },
+            "url": "{{baseUrl}}/api/v1/auth/login"
+          }
+        },
+        {
+          "name": "Login Admin",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json?.data?.accessToken) pm.collectionVariables.set('accessToken', json.data.accessToken);", "if (json?.data?.refreshToken) pm.collectionVariables.set('refreshToken', json.data.refreshToken);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\"\n}" },
+            "url": "{{baseUrl}}/api/v1/auth/login"
+          }
+        },
+        {
+          "name": "Login Lawyer",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json?.data?.accessToken) pm.collectionVariables.set('accessToken', json.data.accessToken);", "if (json?.data?.refreshToken) pm.collectionVariables.set('refreshToken', json.data.refreshToken);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{lawyerEmail}}\",\n  \"password\": \"{{lawyerPassword}}\"\n}" },
+            "url": "{{baseUrl}}/api/v1/auth/login"
+          }
+        },
+        {
+          "name": "Google Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"idToken\": \"{{googleIdToken}}\"\n}" },
+            "url": "{{baseUrl}}/api/v1/auth/google"
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/auth/me" }
+        },
+        {
+          "name": "Refresh Token",
+          "request": { "method": "POST", "header": [], "url": "{{baseUrl}}/api/v1/auth/refresh-token" }
+        },
+        {
+          "name": "Logout",
+          "request": { "method": "POST", "header": [], "url": "{{baseUrl}}/api/v1/auth/logout" }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{clientEmail}}\"\n}" },
+            "url": "{{baseUrl}}/api/v1/auth/forgot-password"
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{clientEmail}}\",\n  \"otp\": \"{{otp}}\",\n  \"newPassword\": \"NewClient@12345\"\n}" },
+            "url": "{{baseUrl}}/api/v1/auth/reset-password"
+          }
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Update Profile Image",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] },
+            "body": { "mode": "formdata", "formdata": [{ "key": "profileImage", "type": "file", "src": "" }] },
+            "url": "{{baseUrl}}/api/v1/user/profile-image"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Specializations",
+      "description": "Admin creates and reviews specializations. Lawyers submit requests; only approved requests become active lawyer specializations.",
+      "item": [
+        {
+          "name": "List Specializations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/specialization/"
+          },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "const first = json?.data?.[0];", "if (first?.id) pm.collectionVariables.set('specializationId', first.id);", "const second = json?.data?.[1];", "if (second?.id) pm.collectionVariables.set('secondSpecializationId', second.id);"] } }]
+        },
+        {
+          "name": "Admin Create Specialization",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Criminal Law\",\n  \"description\": \"Legal matters involving criminal offenses and defense.\"\n}" },
+            "url": "{{baseUrl}}/api/v1/specialization/"
+          },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json?.data?.id) pm.collectionVariables.set('specializationId', json.data.id);"] } }]
+        },
+        {
+          "name": "Admin Update Specialization",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"description\": \"Updated specialization description.\"\n}" },
+            "url": "{{baseUrl}}/api/v1/specialization/{{specializationId}}"
+          }
+        },
+        {
+          "name": "Lawyer Request Specialization",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"specializationId\": \"{{specializationId}}\"\n}" },
+            "url": "{{baseUrl}}/api/v1/specialization/requests"
+          },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json?.data?.id) pm.collectionVariables.set('specializationRequestId', json.data.id);"] } }]
+        },
+        {
+          "name": "Admin List Specialization Requests",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] },
+            "url": "{{baseUrl}}/api/v1/specialization/requests"
+          },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "const pending = json?.data?.find((request) => request.status === 'PENDING');", "if (pending?.id) pm.collectionVariables.set('specializationRequestId', pending.id);"] } }]
+        },
+        {
+          "name": "Admin Approve Specialization Request",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"requestId\": \"{{specializationRequestId}}\",\n  \"status\": \"APPROVED\"\n}" },
+            "url": "{{baseUrl}}/api/v1/specialization/requests/review"
+          }
+        },
+        {
+          "name": "My Approved Specializations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] },
+            "url": "{{baseUrl}}/api/v1/specialization/me"
+          }
+        },
+        {
+          "name": "Lawyer Remove Specialization",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] },
+            "url": "{{baseUrl}}/api/v1/specialization/me/{{specializationId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Appointments and Payments",
+      "item": [
+        {
+          "name": "Book Appointment - Stripe or bKash",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"scheduleId\": \"{{scheduleId}}\",\n  \"paymentGateway\": \"{{paymentGateway}}\"\n}" },
+            "url": "{{baseUrl}}/api/v1/appointment/book-appointment"
+          }
+        },
+        {
+          "name": "Pay Existing Appointment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"appointmentId\": \"{{appointmentId}}\",\n  \"paymentGateway\": \"{{paymentGateway}}\"\n}" },
+            "url": "{{baseUrl}}/api/v1/appointment/pay-appointment"
+          }
+        },
+        {
+          "name": "Cancel Appointment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"appointmentId\": \"{{appointmentId}}\"\n}" },
+            "url": "{{baseUrl}}/api/v1/appointment/cancel-appointment"
+          }
+        },
+        {
+          "name": "bKash Callback",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/v1/appointment/book-appointment/payment/callback?paymentID=replace-with-bkash-payment-id&status=success" }
+        },
+        {
+          "name": "Stripe Webhook - manual signature testing",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "stripe-signature", "value": "replace-with-stripe-cli-signature" }],
+            "body": { "mode": "raw", "raw": "{\n  \"id\": \"evt_test_webhook\",\n  \"object\": \"event\",\n  \"api_version\": \"2025-01-27.acacia\",\n  \"created\": 1700000000,\n  \"data\": {\n    \"object\": {\n      \"id\": \"cs_test_session\",\n      \"object\": \"checkout.session\",\n      \"metadata\": {\n        \"appointmentId\": \"{{appointmentId}}\"\n      },\n      \"payment_status\": \"paid\",\n      \"payment_intent\": \"pi_test_intent\"\n    }\n  },\n  \"livemode\": false,\n  \"pending_webhooks\": 1,\n  \"request\": {\n    \"id\": null,\n    \"idempotency_key\": null\n  },\n  \"type\": \"checkout.session.completed\"\n}" },
+            "url": "{{baseUrl}}/api/v1/appointment/stripe/webhook"
+          }
+        },
+        {
+          "name": "Lawyer Update Appointment Status",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"ONGOING\"\n}" },
+            "url": "{{baseUrl}}/api/v1/appointment/update-status/{{appointmentId}}"
+          }
+        },
+        {
+          "name": "Client Join Appointment",
+          "description": "Client-only route. The current time must be between the schedule startDateTime and endDateTime. Sets joiningTime and changes CONFIRMED to ONGOING; an already ONGOING appointment keeps its status.",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] },
+            "url": "{{baseUrl}}/api/v1/appointment/join/{{appointmentId}}"
+          }
+        },
+        { "name": "My Appointments", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/appointment/my-appointments?page=1&limit=10&status=CONFIRMED" } },
+        { "name": "Lawyer Appointments", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/appointment/lawyer-appointments?page=1&limit=10" } },
+        { "name": "All Appointments", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/appointment/all-appointments?page=1&limit=10" } },
+        { "name": "Get Appointment", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/appointment/{{appointmentId}}" } }
+      ]
+    },
+    {
+      "name": "Schedules",
+      "item": [
+        {
+          "name": "Create Schedule",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"startDateTime\": \"2030-08-25T15:00:00.000Z\",\n  \"endDateTime\": \"2030-08-25T17:00:00.000Z\",\n  \"meetingLink\": \"https://meet.example.com/justice-demo\",\n  \"totalSlots\": 10\n}" }, "url": "{{baseUrl}}/api/v1/schedule/" }
+        },
+        { "name": "My Schedules", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/schedule/my-schedules?page=1&limit=10" } },
+        { "name": "Today's Schedules", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/schedule/today" } },
+        { "name": "Available Schedules", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/schedule/available?page=1&limit=10&lawyerId={{lawyerId}}" } },
+        { "name": "All Schedules", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/schedule/all-schedules?page=1&limit=10&status=PUBLISHED" } },
+        { "name": "Get Schedule", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/schedule/{{scheduleId}}" } },
+        { "name": "Update Schedule", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"startDateTime\": \"2030-08-25T15:00:00.000Z\",\n  \"endDateTime\": \"2030-08-25T18:00:00.000Z\",\n  \"meetingLink\": \"https://meet.example.com/justice-updated\",\n  \"totalSlots\": 12\n}" }, "url": "{{baseUrl}}/api/v1/schedule/{{scheduleId}}" } },
+        { "name": "Publish Schedule", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"status\": \"PUBLISHED\"\n}" }, "url": "{{baseUrl}}/api/v1/schedule/{{scheduleId}}/status" } },
+        { "name": "Delete Schedule", "request": { "method": "DELETE", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/schedule/{{scheduleId}}" } }
+      ]
+    },
+    {
+      "name": "Payment Queries",
+      "item": [
+        { "name": "My Payments", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/payment/my-payments?page=1&limit=10" } },
+        { "name": "All Payments", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/payment/all-payments?page=1&limit=10&paymentGateway=STRIPE&status=PAID" } },
+        { "name": "Get Payment", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/payment/{{paymentId}}" } }
+      ]
+    },
+    {
+      "name": "Lawyer Module",
+      "description": "Lawyer applications require one or more specialization IDs. Selected specializations remain pending until an admin approves their requests.",
+      "item": [
+        { "name": "Apply as Lawyer - multipart", "request": { "method": "POST", "header": [], "body": { "mode": "formdata", "formdata": [{ "key": "user", "value": "{\"name\":\"Test Lawyer\",\"email\":\"{{lawyerEmail}}\"}", "type": "text" }, { "key": "lawyer", "value": "{\"licenseNumber\":\"BD-LAW-1001\",\"qualifications\":\"LLB\",\"experienceYears\":5,\"bio\":\"Civil litigation lawyer\",\"consultationFee\":1500,\"contactNumber\":\"+8801812345678\",\"specializationIds\":[\"{{specializationId}}\",\"{{secondSpecializationId}}\"]}", "type": "text" }, { "key": "resume", "type": "file", "src": "" }, { "key": "additionalFiles", "type": "file", "src": "" }] }, "url": "{{baseUrl}}/api/v1/lawyer/apply-lw" } },
+        { "name": "Verify Lawyer Email", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{lawyerEmail}}\",\n  \"otp\": \"{{otp}}\"\n}" }, "url": "{{baseUrl}}/api/v1/lawyer/verify-email" } },
+        { "name": "Approve Lawyer", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"lawyerId\": \"{{lawyerId}}\",\n  \"verificationStatus\": \"APPROVED\"\n}" }, "url": "{{baseUrl}}/api/v1/lawyer/approve-lw" } },
+        { "name": "Admin All Lawyers", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/lawyer/all-lawyers?page=1&limit=10" } },
+        { "name": "Update Lawyer Profile", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"bio\": \"Civil litigation and family law specialist\",\n  \"consultationFee\": 1500,\n  \"qualifications\": \"LLB, Bar Council\",\n  \"experienceYears\": 6,\n  \"specializationIds\": [\"{{specializationId}}\", \"{{secondSpecializationId}}\"]\n}" }, "url": "{{baseUrl}}/api/v1/lawyer/profile" } },
+        { "name": "Public Available Lawyers", "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/v1/lawyer/public/available-today" } },
+        { "name": "Public All Lawyers", "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/v1/lawyer/all-lw?page=1&limit=10" } },
+        { "name": "Public Lawyer Profile", "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/v1/lawyer/{{lawyerId}}" } }
+      ]
+    },
+    {
+      "name": "Cases - Core Workflow",
+      "description": "Mounted at /api/v1/case. Recommended flow: Client creates a case from a completed appointment, then use caseId from the response for the remaining requests. Lawyer, admin, and client permissions vary by endpoint.",
+      "item": [
+        { "name": "01 - Create Case (Client)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"title\": \"Property consultation\",\n  \"description\": \"Need legal advice about a property dispute.\",\n  \"caseType\": \"PROPERTY\",\n  \"priority\": \"HIGH\",\n  \"courtName\": \"Dhaka District Court\",\n  \"courtCaseNumber\": \"DHC-2026-001\",\n  \"filingDate\": \"2025-01-15T00:00:00.000Z\",\n  \"lawyerId\": \"{{lawyerId}}\",\n  \"appointmentId\": \"{{appointmentId}}\"\n}" }, "url": "{{baseUrl}}/api/v1/case/create-case" } },
+        { "name": "02 - My Cases (Client)", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case/my-cases?page=1&limit=10" } },
+        { "name": "03 - Lawyer Cases (Lawyer)", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case/lawyer-cases?page=1&limit=10" } },
+        { "name": "04 - Get Case Details", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case/{{caseId}}" } },
+        { "name": "05 - Update Case", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"title\": \"Updated property consultation\",\n  \"priority\": \"MEDIUM\"\n}" }, "url": "{{baseUrl}}/api/v1/case/{{caseId}}" } },
+        { "name": "06 - Change Status (Lawyer)", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"status\": \"IN_PROGRESS\"\n}" }, "url": "{{baseUrl}}/api/v1/case/update-status/{{caseId}}" } },
+        { "name": "07 - Close Case (Lawyer)", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{}" }, "url": "{{baseUrl}}/api/v1/case/close/{{caseId}}" } },
+        { "name": "08 - Assign Lawyer (Admin)", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"lawyerId\": \"{{lawyerId}}\"\n}" }, "url": "{{baseUrl}}/api/v1/case/assign-lawyer/{{caseId}}" } },
+        { "name": "09 - All Cases (Admin)", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case/all-cases?page=1&limit=10" } },
+        { "name": "10 - Delete Case (Admin)", "request": { "method": "DELETE", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case/{{caseId}}" } }
+      ]
+    },
+    {
+      "name": "Case Collaboration - legacy combined view",
+      "description": "Legacy combined view. Use the dedicated Legal Documents, Case Activities, Reports, Invoices, and Lawyer Notes sections below. These routers are now mounted in src/app.ts.",
+      "item": [
+        { "name": "01 - Activities - Create (Lawyer/Admin)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"action\": \"DOCUMENT_REVIEWED\",\n  \"message\": \"Reviewed the initial case documents.\",\n  \"metadata\": {\n    \"documentCount\": 2\n  }\n}" }, "url": "{{baseUrl}}/api/v1/case-activity/{{caseId}}" } },
+        { "name": "02 - Activities - List Case", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case-activity/case/{{caseId}}" } },
+        { "name": "03 - Activities - Get One", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case-activity/{{activityId}}" } },
+        { "name": "04 - Messages - Send (Client/Lawyer)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"content\": \"Please review the attached case update.\"\n}" }, "url": "{{baseUrl}}/api/v1/case-message/{{caseId}}" } },
+        { "name": "05 - Messages - List Case", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case-message/{{caseId}}" } },
+        { "name": "06 - Messages - Delete", "request": { "method": "DELETE", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case-message/{{messageId}}" } },
+        { "name": "07 - Reports - Create (Lawyer)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"title\": \"Initial Case Report\",\n  \"summary\": \"Summary of findings and recommended next steps.\",\n  \"generatedBy\": \"Justice Desk Legal Team\"\n}" }, "url": "{{baseUrl}}/api/v1/case-report/{{caseId}}" } },
+        { "name": "08 - Reports - List Case", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case-report/case/{{caseId}}" } },
+        { "name": "My Reports", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case-report/my-reports?page=1&limit=10" } },
+        { "name": "All Reports", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case-report/all-reports?page=1&limit=10" } },
+        { "name": "Get Case Report", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case-report/{{reportId}}" } },
+        { "name": "Update Case Report", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"title\": \"Updated Case Report\",\n  \"summary\": \"Updated findings and next steps.\"\n}" }, "url": "{{baseUrl}}/api/v1/case-report/{{reportId}}" } },
+        { "name": "Delete Case Report", "request": { "method": "DELETE", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case-report/{{reportId}}" } },
+        { "name": "09 - Invoices - Create (Lawyer)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"amount\": 1500,\n  \"tax\": 225,\n  \"currency\": \"BDT\",\n  \"dueDate\": \"2030-02-15T00:00:00.000Z\",\n  \"description\": \"Initial legal consultation invoice\",\n  \"caseId\": \"{{caseId}}\",\n  \"clientId\": \"replace-with-client-id\",\n  \"lawyerId\": \"{{lawyerId}}\"\n}" }, "url": "{{baseUrl}}/api/v1/invoice/" } },
+        { "name": "My Invoices", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/invoice/my-invoices?page=1&limit=10" } },
+        { "name": "All Invoices", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/invoice/all-invoices?page=1&limit=10" } },
+        { "name": "Case Invoices", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/invoice/case/{{caseId}}" } },
+        { "name": "Update Invoice Status", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"status\": \"PAID\"\n}" }, "url": "{{baseUrl}}/api/v1/invoice/{{invoiceId}}/status" } },
+        { "name": "Regenerate Invoice PDF", "request": { "method": "POST", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/invoice/{{invoiceId}}/regenerate-pdf" } },
+        { "name": "Update Invoice", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"description\": \"Updated legal service invoice\",\n  \"tax\": 300\n}" }, "url": "{{baseUrl}}/api/v1/invoice/{{invoiceId}}" } },
+        { "name": "Delete Invoice", "request": { "method": "DELETE", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/invoice/{{invoiceId}}" } },
+        { "name": "Get Invoice", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/invoice/{{invoiceId}}" } },
+        { "name": "10 - Notes - Create Private (Lawyer)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"title\": \"Private case note\",\n  \"content\": \"Follow up with the client about the evidence.\",\n  \"isPrivate\": true\n}" }, "url": "{{baseUrl}}/api/v1/lawyer-note/{{caseId}}" } },
+        { "name": "Case Notes", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/lawyer-note/case/{{caseId}}" } },
+        { "name": "Get Note", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/lawyer-note/{{noteId}}" } },
+        { "name": "Update Note", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"content\": \"Updated internal case note.\"\n}" }, "url": "{{baseUrl}}/api/v1/lawyer-note/{{noteId}}" } },
+        { "name": "Delete Note", "request": { "method": "DELETE", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/lawyer-note/{{noteId}}" } },
+        { "name": "11 - Documents - Upload Metadata", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"title\": \"Property deed\",\n  \"description\": \"Initial property document\",\n  \"fileUrl\": \"https://example.com/documents/property-deed.pdf\",\n  \"filePublicId\": \"justice-demo/property-deed\",\n  \"fileType\": \"application/pdf\",\n  \"fileSize\": 245760,\n  \"documentType\": \"CASE_FILE\"\n}" }, "url": "{{baseUrl}}/api/v1/legal-document/{{caseId}}" } },
+        { "name": "My Documents", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/legal-document/my-documents?page=1&limit=10" } },
+        { "name": "Case Documents", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/legal-document/case/{{caseId}}" } },
+        { "name": "Update Legal Document", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"title\": \"Updated property deed\",\n  \"documentType\": \"CASE_FILE\"\n}" }, "url": "{{baseUrl}}/api/v1/legal-document/{{documentId}}" } },
+        { "name": "Delete Legal Document", "request": { "method": "DELETE", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/legal-document/{{documentId}}" } },
+        { "name": "Get Legal Document", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/legal-document/{{documentId}}" } },
+        { "name": "12 - Video - Create Session", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"appointmentId\": \"{{appointmentId}}\",\n  \"provider\": \"custom\",\n  \"roomUrl\": \"https://meet.example.com/justice-room\"\n}" }, "url": "{{baseUrl}}/api/v1/video-session/" } },
+        { "name": "Start Video Session", "request": { "method": "PATCH", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/video-session/{{appointmentId}}/start" } },
+        { "name": "End Video Session", "request": { "method": "PATCH", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/video-session/{{appointmentId}}/end" } },
+        { "name": "Get Video Session", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/video-session/{{appointmentId}}" } }
+      ]
+    },
+    {
+      "name": "Legal Documents",
+      "description": "Create and manage documents for {{caseId}}. caseId is in the URL, not the request body.",
+      "item": [
+        { "name": "Create Document (Client/Lawyer/Admin)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"title\": \"Property deed\",\n  \"description\": \"Initial property document\",\n  \"fileUrl\": \"https://example.com/documents/property-deed.pdf\",\n  \"filePublicId\": \"justice-demo/property-deed\",\n  \"fileType\": \"application/pdf\",\n  \"fileSize\": 245760,\n  \"documentType\": \"CASE_FILE\"\n}" }, "url": "{{baseUrl}}/api/v1/legal-document/{{caseId}}" } },
+        { "name": "List Case Documents", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/legal-document/case/{{caseId}}" } },
+        { "name": "List My Documents", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/legal-document/my-documents?page=1&limit=10" } },
+        { "name": "Get Document", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/legal-document/{{documentId}}" } },
+        { "name": "Update Document", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"title\": \"Updated property deed\",\n  \"documentType\": \"CASE_FILE\"\n}" }, "url": "{{baseUrl}}/api/v1/legal-document/{{documentId}}" } },
+        { "name": "Delete Document", "request": { "method": "DELETE", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/legal-document/{{documentId}}" } }
+      ]
+    },
+    {
+      "name": "Case Activities",
+      "description": "Lawyers and admins create activity records; clients can view them.",
+      "item": [
+        { "name": "Create Activity", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"action\": \"DOCUMENT_REVIEWED\",\n  \"message\": \"Reviewed the case documents.\",\n  \"metadata\": { \"documentCount\": 2 }\n}" }, "url": "{{baseUrl}}/api/v1/case-activity/{{caseId}}" } },
+        { "name": "List Case Activities", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case-activity/case/{{caseId}}" } },
+        { "name": "Get Activity", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case-activity/{{activityId}}" } }
+      ]
+    },
+    {
+      "name": "Case Reports",
+      "description": "Lawyers create reports; clients and admins can view reports.",
+      "item": [
+        { "name": "Create Report (Lawyer)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"title\": \"Initial Case Report\",\n  \"summary\": \"Summary of findings and recommended next steps.\",\n  \"generatedBy\": \"Justice Desk Legal Team\"\n}" }, "url": "{{baseUrl}}/api/v1/case-report/{{caseId}}" } },
+        { "name": "List Case Reports", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case-report/case/{{caseId}}" } },
+        { "name": "Get Report", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/case-report/{{reportId}}" } }
+      ]
+    },
+    {
+      "name": "Case Invoices",
+      "description": "Lawyers create invoices for a case; clients can list and view them.",
+      "item": [
+        { "name": "Create Invoice (Lawyer)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"amount\": 1500,\n  \"tax\": 225,\n  \"currency\": \"BDT\",\n  \"dueDate\": \"2030-02-15T00:00:00.000Z\",\n  \"description\": \"Initial legal consultation invoice\",\n  \"caseId\": \"{{caseId}}\",\n  \"clientId\": \"replace-with-client-id\",\n  \"lawyerId\": \"{{lawyerId}}\"\n}" }, "url": "{{baseUrl}}/api/v1/invoice/" } },
+        { "name": "List Case Invoices", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/invoice/case/{{caseId}}" } },
+        { "name": "Get Invoice", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/invoice/{{invoiceId}}" } }
+      ]
+    },
+    {
+      "name": "Lawyer Notes",
+      "description": "Internal case notes created and managed by lawyers or admins.",
+      "item": [
+        { "name": "Create Note (Lawyer)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"title\": \"Private case note\",\n  \"content\": \"Follow up with the client about the evidence.\",\n  \"isPrivate\": true\n}" }, "url": "{{baseUrl}}/api/v1/lawyer-note/{{caseId}}" } },
+        { "name": "List Case Notes", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/lawyer-note/case/{{caseId}}" } },
+        { "name": "Get Note", "request": { "method": "GET", "header": [], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/lawyer-note/{{noteId}}" } }
+      ]
+    }
+  ]
+}

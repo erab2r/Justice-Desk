@@ -1,0 +1,18 @@
+model VideoSession {
+  id String @id @default(uuid())
+
+  provider String?
+  roomId   String  @unique
+  roomUrl  String?
+
+  startedAt DateTime?
+  endedAt   DateTime?
+
+  appointmentId String      @unique
+  appointment   Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("video_sessions")
+}

@@ -1,0 +1,20 @@
+model CaseMessage {
+  id String @id @default(uuid())
+
+  content String
+  isRead  Boolean @default(false)
+
+  caseId String
+  case   Case   @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  senderId String
+  sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([caseId], name: "idx_case_message_case")
+  @@index([senderId], name: "idx_case_message_sender")
+  @@index([createdAt], name: "idx_case_message_createdAt")
+  @@map("case_messages")
+}

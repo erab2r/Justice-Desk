@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lawyer Application Update</title>
+
+```
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f7f7f7;
+    color: #333333;
+  }
+
+  .container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  h2 {
+    margin-top: 0;
+    color: #222222;
+  }
+
+  p {
+    line-height: 1.6;
+    margin: 12px 0;
+  }
+
+  .reason {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background-color: #fdf2f2;
+    border-left: 4px solid #e02424;
+    color: #611a15;
+    line-height: 1.6;
+  }
+
+  .footer {
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #eeeeee;
+    font-size: 12px;
+    color: #888888;
+    text-align: center;
+  }
+</style>
+```
+
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>Lawyer Application Update</h2>
+
+```
+  <p>
+    Hello <%= name %>,
+  </p>
+
+  <p>
+    Thank you for applying to become a lawyer on
+    <strong>Justice Desk</strong>.
+  </p>
+
+  <p>
+    After carefully reviewing your application, we are unable to approve
+    your lawyer application at this time.
+  </p>
+
+  <% if (reason) { %>
+    <div class="reason">
+      <strong>Reason:</strong>
+      <%= reason %>
+    </div>
+  <% } %>
+
+  <p>
+    You may review the information provided in your application and
+    contact Justice Desk support if you believe this decision was made
+    in error.
+  </p>
+
+  <div class="footer">
+    &copy; <%= new Date().getFullYear() %> Justice Desk.
+    All rights reserved.
+  </div>
+</div>
+```
+
+  </body>
+</html>

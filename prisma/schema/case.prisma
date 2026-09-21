@@ -1,0 +1,45 @@
+model Case {
+  id String @id @default(uuid())
+
+  caseNumber String @unique
+
+  title       String
+  description String?
+  caseType    String?
+
+  status   CaseStatus   @default(OPEN)
+  priority CasePriority @default(MEDIUM)
+
+  courtName       String?
+  courtCaseNumber String?
+
+  filingDate DateTime?
+  resolvedAt DateTime?
+  closedAt   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  clientId String
+  client   Client @relation(fields: [clientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  lawyerId String
+  lawyer   Lawyer @relation(fields: [lawyerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  appointmentId String?      @unique
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  documents  LegalDocument[]
+  notes      LawyerNote[]
+  invoices   Invoice[]
+  reports    CaseReport[]
+  activities CaseActivity[]
+  messages   CaseMessage[]
+
+  @@index([clientId], name: "idx_case_client")
+  @@index([lawyerId], name: "idx_case_lawyer")
+  @@index([status], name: "idx_case_status")
+  @@index([priority], name: "idx_case_priority")
+  @@map("cases")
+}

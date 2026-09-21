@@ -1,0 +1,46 @@
+model User {
+  id String @id @default(uuid())
+
+  name     String
+  email    String  @unique
+  password String?
+
+  googleId     String?      @unique
+  authProvider AuthProvider @default(CREDENTIAL)
+
+  emailVerified Boolean @default(false)
+
+  role   Role       @default(CLIENT)
+  status UserStatus @default(ACTIVE)
+
+  needPasswordChange Boolean @default(false)
+
+  imageUrl      String @default("")
+  imagePublicId String @default("")
+
+  isDeleted Boolean   @default(false)
+  deletedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // One-to-one profile relations
+  client Client?
+  lawyer Lawyer?
+
+  // Case relations
+  caseActivities CaseActivity[]
+  caseMessages   CaseMessage[]
+
+  // Case report relation
+  caseReports CaseReport[]
+
+  // Legal document relation
+  uploadedDocuments LegalDocument[]
+
+  @@index([email], map: "idx_user_email")
+  @@index([role], map: "idx_user_role")
+  @@index([status], map: "idx_user_status")
+  @@index([isDeleted], map: "idx_user_isDeleted")
+  @@map("users")
+}

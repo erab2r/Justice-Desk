@@ -1,0 +1,508 @@
+model Appointment {
+id              String            @id @default(uuid())
+
+status          AppointmentStatus @default(PENDING)
+
+joiningTime     DateTime?
+serialNumber    Int?
+
+meetingLink     String?
+
+recordUrl       String?
+recordPublicId  String?
+
+createdAt       DateTime          @default(now())
+updatedAt       DateTime          @updatedAt
+
+// Client relation
+clientId        String
+client          Client            @relation(fields: [clientId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+// Lawyer relation
+lawyerId        String
+lawyer          Lawyer            @relation(fields: [lawyerId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+// Schedule relation
+scheduleId      String
+schedule        Schedule          @relation(fields: [scheduleId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+// Payment relation
+payment         Payment?
+
+// Case relation
+case            Case?
+
+@@unique([clientId, lawyerId, scheduleId],name: "unique_appointment")
+
+@@unique([scheduleId, serialNumber, joiningTime],name: "unique_appointment_serial_number")
+
+@@index([clientId], name: "idx_appointment_client")
+@@index([lawyerId], name: "idx_appointment_lawyer")
+@@index([scheduleId], name: "idx_appointment_schedule")
+@@index([status], name: "idx_appointment_status")
+
+@@map("appointments")
+}
+model Case {
+id              String       @id @default(uuid())
+
+caseNumber      String       @unique
+
+title           String
+description     String?
+caseType        String?
+
+status          CaseStatus   @default(OPEN)
+priority        CasePriority @default(MEDIUM)
+
+courtName       String?
+courtCaseNumber String?
+
+filingDate      DateTime?
+resolvedAt      DateTime?
+closedAt        DateTime?
+
+createdAt       DateTime     @default(now())
+updatedAt       DateTime     @updatedAt
+
+// Client relation
+clientId        String
+client          Client       @relation(fields: [clientId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+// Lawyer relation
+lawyerId        String
+lawyer          Lawyer       @relation(fields: [lawyerId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+// Appointment that created this case
+appointmentId   String?      @unique
+appointment     Appointment? @relation(fields: [appointmentId],references: [id],onDelete: SetNull,onUpdate: Cascade)
+
+// Case relations
+documents       LegalDocument[]
+notes           LawyerNote[]
+invoices        Invoice[]
+reports         CaseReport[]
+
+@@index([clientId], name: "idx_case_client")
+@@index([lawyerId], name: "idx_case_lawyer")
+@@index([status], name: "idx_case_status")
+@@index([priority], name: "idx_case_priority")
+
+@@map("cases")
+}
+model CaseReport {
+id              String    @id @default(uuid())
+
+title           String
+summary         String?
+
+reportUrl       String?
+reportPublicId  String?
+
+generatedBy     String?
+
+createdAt       DateTime  @default(now())
+updatedAt       DateTime  @updatedAt
+
+// Case relation
+caseId          String
+case                Case      @relation(fields: [caseId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+@@index([caseId], name: "idx_case_report_case")
+
+@@map("case_reports")
+}
+
+model Client {
+id              String    @id @default(uuid())
+
+name            String
+email           String    @unique
+contactNumber   String?
+address         String?
+gender          Gender?
+dateOfBirth     DateTime?
+
+isDeleted       Boolean   @default(false)
+deletedAt       DateTime?
+
+createdAt       DateTime  @default(now())
+updatedAt       DateTime  @updatedAt
+
+// Authentication relation
+userId          String    @unique
+user            User      @relation(fields: [userId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+// Relations
+appointments    Appointment[]
+cases           Case[]
+documents       LegalDocument[]
+invoices        Invoice[]
+
+@@index([email], name: "idx_client_email")
+@@index([isDeleted], name: "idx_client_isDeleted")
+
+@@map("clients")
+}
+enum Role {
+SUPER_ADMIN
+ADMIN
+LAWYER
+CLIENT
+}
+
+enum UserStatus {
+ACTIVE
+BLOCKED
+DELETED
+}
+
+enum Gender {
+MALE
+FEMALE
+OTHER
+}
+
+enum AuthProvider {
+GOOGLE
+CREDENTIAL
+}
+
+enum LawyerVerificationStatus {
+PENDING
+APPROVED
+REJECTED
+}
+
+enum AppointmentStatus {
+PENDING
+CONFIRMED
+CANCELLED
+ONGOING
+COMPLETED
+}
+
+enum PaymentStatus {
+UNPAID
+PAID
+FAILED
+CANCELLED
+REFUNDED
+}
+
+enum ScheduleStatus {
+DRAFT
+PUBLISHED
+}
+
+enum CaseStatus {
+OPEN
+IN_PROGRESS
+WAITING_FOR_CLIENT
+RESOLVED
+CLOSED
+}
+
+enum CasePriority {
+LOW
+MEDIUM
+HIGH
+URGENT
+}
+
+enum DocumentType {
+ID_DOCUMENT
+COURT_DOCUMENT
+EVIDENCE
+CONTRACT
+AGREEMENT
+LEGAL_NOTICE
+CASE_FILE
+OTHER
+}
+
+enum DocumentUploader {
+CLIENT
+LAWYER
+ADMIN
+}
+
+enum InvoiceStatus {
+UNPAID
+PAID
+PARTIALLY_PAID
+OVERDUE
+CANCELLED
+}
+model Invoice {
+id              String        @id @default(uuid())
+
+invoiceNumber   String        @unique
+
+amount          Decimal       @db.Decimal(10, 2)
+tax             Decimal       @default(0) @db.Decimal(10, 2)
+totalAmount     Decimal       @db.Decimal(10, 2)
+
+currency        String        @default("BDT")
+
+status          InvoiceStatus @default(UNPAID)
+
+invoiceDate     DateTime      @default(now())
+dueDate         DateTime?
+
+pdfUrl          String?
+pdfPublicId     String?
+
+description     String?
+
+createdAt       DateTime      @default(now())
+updatedAt       DateTime      @updatedAt
+
+// Case relation
+caseId          String
+case            Case          @relation(fields: [caseId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+// Client relation
+clientId        String
+client          Client        @relation(fields: [clientId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+// Lawyer relation
+lawyerId        String
+lawyer          Lawyer        @relation(fields: [lawyerId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+@@index([caseId], name: "idx_invoice_case")
+@@index([clientId], name: "idx_invoice_client")
+@@index([lawyerId], name: "idx_invoice_lawyer")
+@@index([status], name: "idx_invoice_status")
+
+@@map("invoices")
+}
+model Lawyer {
+id                  String                    @id @default(uuid())
+
+name                String
+email               String                    @unique
+address             String?
+
+specialization      String
+licenseNumber       String                    @unique
+qualifications      String
+experienceYears     Int
+
+bio                 String?
+consultationFee     Decimal?                  @db.Decimal(10, 2)
+contactNumber       String?
+
+// Lawyer verification
+verificationStatus  LawyerVerificationStatus @default(PENDING)
+rejectionReason     String?
+reviewedBy          String?
+reviewedAt          DateTime?
+
+// Lawyer documents
+resume              String?
+resumePublicId      String?
+additionalFiles     Json?
+
+// Soft delete
+isDeleted           Boolean                   @default(false)
+deletedAt           DateTime?
+
+createdAt           DateTime                  @default(now())
+updatedAt           DateTime                  @updatedAt
+
+// Authentication relation
+userId              String                    @unique
+user                User                      @relation(fields: [userId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+// Relations
+schedules           Schedule[]
+appointments        Appointment[]
+cases               Case[]
+notes               LawyerNote[]
+documents           LegalDocument[]
+invoices            Invoice[]
+
+@@index([email], name: "idx_lawyer_email")
+@@index([specialization], name: "idx_lawyer_specialization")
+@@index([verificationStatus], name: "idx_lawyer_verification")
+
+@@map("lawyers")
+}
+model LawyerNotes {
+id              String    @id @default(uuid())
+
+title           String?
+content         String
+
+isPrivate       Boolean   @default(true)
+
+createdAt       DateTime  @default(now())
+updatedAt       DateTime  @updatedAt
+
+caseId          String
+case            Case      @relation(fields: [caseId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+lawyerId        String
+lawyer          Lawyer    @relation(fields: [lawyerId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+@@index([caseId], name: "idx_lawyer_note_case")
+@@index([lawyerId], name: "idx_lawyer_note_lawyer")
+
+@@map("lawyer_notes")
+}
+model LegalDocument {
+id              String           @id @default(uuid())
+
+title           String
+description     String?
+
+fileUrl         String
+filePublicId    String?
+
+fileType        String?
+fileSize        Int?
+
+documentType    DocumentType     @default(OTHER)
+uploadedBy      DocumentUploader
+
+createdAt       DateTime         @default(now())
+updatedAt       DateTime         @updatedAt
+
+// Case relation
+caseId          String
+case            Case             @relation(fields: [caseId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+// Client relation
+clientId        String?
+client          Client?          @relation(fields: [clientId],references: [id],onDelete: SetNull,onUpdate: Cascade)
+
+// Lawyer relation
+lawyerId        String?
+lawyer          Lawyer?          @relation(fields: [lawyerId],references: [id],onDelete: SetNull,onUpdate: Cascade)
+
+@@index([caseId], name: "idx_document_case")
+@@index([clientId], name: "idx_document_client")
+@@index([lawyerId], name: "idx_document_lawyer")
+
+@@map("legal_documents")
+}
+model Payment {
+id                    String        @id @default(uuid())
+
+status                PaymentStatus @default(UNPAID)
+
+amount                Decimal       @db.Decimal(10, 2)
+currency              String        @default("BDT")
+
+paymentGateway        String        @default("bkash")
+merchantInvoiceNumber String        @unique
+
+bkashPaymentId        String?       @unique
+bkashTrxId            String?
+payerReference        String?
+
+paidAt                DateTime?
+
+gatewayResponse       Json?
+
+// Refund information
+refundTrxId           String?
+refundAmount          Decimal?      @db.Decimal(10, 2)
+refundReason          String?
+refundedAt            DateTime?
+
+// Appointment relation
+appointmentId         String        @unique
+appointment           Appointment   @relation(fields: [appointmentId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+createdAt              DateTime     @default(now())
+updatedAt              DateTime     @updatedAt
+
+@@index([status], name: "idx_payment_status")
+@@index([appointmentId], name: "idx_payment_appointment")
+
+@@map("payments")
+}
+model Schedule {
+id              String         @id @default(uuid())
+
+startDateTime   DateTime
+endDateTime     DateTime
+
+totalSlots      Int
+availableSlots  Int
+
+meetingLink     String?
+
+status          ScheduleStatus @default(DRAFT)
+
+isDeleted       Boolean        @default(false)
+deletedAt       DateTime?
+
+createdAt       DateTime       @default(now())
+updatedAt       DateTime       @updatedAt
+
+// Lawyer relation
+lawyerId        String
+lawyer          Lawyer         @relation(fields: [lawyerId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+// Appointments
+appointments    Appointment[]
+
+@@unique([lawyerId, startDateTime, endDateTime],name: "unique_schedule")
+
+@@index([lawyerId], name: "idx_schedule_lawyer")
+@@index([startDateTime], name: "idx_schedule_startDateTime")
+@@index([status], name: "idx_schedule_status")
+
+@@map("schedules")
+}
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+model User {
+id                 String       @id @default(uuid())
+
+name               String
+email              String       @unique
+password           String?
+
+googleId           String?      @unique
+authProvider       AuthProvider @default(CREDENTIAL)
+
+emailVerified      Boolean      @default(false)
+
+role               Role         @default(CLIENT)
+status             UserStatus   @default(ACTIVE)
+
+needPasswordChange Boolean      @default(false)
+
+imageUrl           String       @default("")
+imagePublicId      String       @default("")
+
+isDeleted          Boolean      @default(false)
+deletedAt          DateTime?
+
+createdAt          DateTime     @default(now())
+updatedAt          DateTime     @updatedAt
+
+// Relations
+client             Client?
+lawyer             Lawyer?
+
+@@index([email], map: "idx_user_email")
+@@index([role], map: "idx_user_role")
+@@index([status], map: "idx_user_status")
+
+@@map("users")
+}

@@ -1,0 +1,40 @@
+model LegalDocument {
+  id String @id @default(uuid())
+
+  title       String
+  description String?
+
+  fileUrl      String
+  filePublicId String?
+
+  fileType String?
+  fileSize Int?
+
+  documentType DocumentType
+
+  // Who uploaded the document
+  uploadedById String
+  uploadedBy   User   @relation(fields: [uploadedById], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Case relation
+  caseId String
+  case   Case   @relation(fields: [caseId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  // Optional client relation
+  clientId String?
+  client   Client? @relation(fields: [clientId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  // Optional lawyer relation
+  lawyerId String?
+  lawyer   Lawyer? @relation(fields: [lawyerId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  @@index([caseId], name: "idx_document_case")
+  @@index([uploadedById], name: "idx_document_uploadedBy")
+  @@index([clientId], name: "idx_document_client")
+  @@index([lawyerId], name: "idx_document_lawyer")
+  @@index([documentType], name: "idx_document_type")
+  @@map("legal_documents")
+}

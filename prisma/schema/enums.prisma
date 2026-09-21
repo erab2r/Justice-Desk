@@ -1,0 +1,95 @@
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  LAWYER
+  CLIENT
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  DELETED
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum AuthProvider {
+  GOOGLE
+  CREDENTIAL
+}
+
+enum LawyerVerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum SpecializationRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  ONGOING
+  COMPLETED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PAID
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
+enum ScheduleStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum CaseStatus {
+  OPEN
+  IN_PROGRESS
+  WAITING_FOR_CLIENT
+  RESOLVED
+  CLOSED
+}
+
+enum CasePriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum DocumentType {
+  ID_DOCUMENT
+  COURT_DOCUMENT
+  EVIDENCE
+  CONTRACT
+  AGREEMENT
+  LEGAL_NOTICE
+  CASE_FILE
+  OTHER
+}
+
+enum InvoiceStatus {
+  UNPAID
+  PAID
+  PARTIALLY_PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum PaymentGateway {
+  STRIPE
+  BKASH
+}
