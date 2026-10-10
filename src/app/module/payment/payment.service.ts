@@ -113,7 +113,13 @@ const getAllPayments = async (query: IQuery) => {
         include: {
             appointment: {
                 include: {
-                    lawyer: { select: { id: true, name: true, specialization: true } },
+                    lawyer: { select: { id: true, name: true } },
+                    client: { select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                    },
+                    },
                     schedule: true,
                 },
             },

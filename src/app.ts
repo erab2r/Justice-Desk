@@ -8,7 +8,6 @@ import express, {
 	type Response,
 } from "express";
 import httpStatus from "http-status";
-import config from "./app/config";
 import { getBkashIdToken } from "./app/lib/bkash";
 import { globalErrorHandler } from "./app/middleware/globalErrorHandler";
 import { notFound } from "./app/middleware/notFound";
@@ -30,9 +29,16 @@ import { LawyerNoteRoutes } from "./app/module/lawyernote/lawyerNote.route";
 
 const app: Application = express();
 
+const allowedOrigins = [
+	"https://justice-desk-frontend.vercel.app",
+	"http://localhost:3000",
+];
+
 app.use(
 	cors({
-		origin: config.frontend_url,
+		origin: (origin, callback) => {
+			callback(null, !origin || allowedOrigins.includes(origin));
+		},
 		credentials: true,
 	}),
 );

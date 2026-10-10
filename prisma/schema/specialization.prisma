@@ -34,8 +34,9 @@ model LawyerSpecializationRequest {
   lawyerId String
   lawyer   Lawyer @relation(fields: [lawyerId], references: [id], onDelete: Cascade)
 
-  specializationId String
-  specialization   Specialization @relation(fields: [specializationId], references: [id], onDelete: Cascade)
+  specializationId String?
+  specialization   Specialization? @relation(fields: [specializationId], references: [id], onDelete: Cascade)
+  newPracticeArea String?
 
   status          SpecializationRequestStatus @default(PENDING)
   rejectionReason String?

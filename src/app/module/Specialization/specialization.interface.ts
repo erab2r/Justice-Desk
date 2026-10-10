@@ -1,18 +1,19 @@
 export interface ICreateSpecializationPayload {
-  name: string;
-  description?: string;
+	name: string;
+	description?: string;
 }
 
 export interface IUpdateSpecializationPayload {
-  name?: string;
-  description?: string;
+	name?: string;
+	description?: string;
 }
 export interface IAssignSpecializationPayload {
-  specializationId: string;
+	specializationId?: string;
+	newPracticeArea?: string;
 }
 
 export interface IReviewSpecializationRequestPayload {
-  requestId: string;
-  status: "APPROVED" | "REJECTED";
-  rejectionReason?: string;
+	requestId: string;
+	status: "APPROVED" | "REJECTED";
+	rejectionReason?: string;
 }

@@ -324,6 +324,11 @@ export type SpecializationScalarRelationFilter = {
   isNot?: Prisma.SpecializationWhereInput
 }
 
+export type SpecializationNullableScalarRelationFilter = {
+  is?: Prisma.SpecializationWhereInput | null
+  isNot?: Prisma.SpecializationWhereInput | null
+}
+
 export type SpecializationCreateNestedOneWithoutLawyersInput = {
   create?: Prisma.XOR<Prisma.SpecializationCreateWithoutLawyersInput, Prisma.SpecializationUncheckedCreateWithoutLawyersInput>
   connectOrCreate?: Prisma.SpecializationCreateOrConnectWithoutLawyersInput
@@ -344,10 +349,12 @@ export type SpecializationCreateNestedOneWithoutRequestsInput = {
   connect?: Prisma.SpecializationWhereUniqueInput
 }
 
-export type SpecializationUpdateOneRequiredWithoutRequestsNestedInput = {
+export type SpecializationUpdateOneWithoutRequestsNestedInput = {
   create?: Prisma.XOR<Prisma.SpecializationCreateWithoutRequestsInput, Prisma.SpecializationUncheckedCreateWithoutRequestsInput>
   connectOrCreate?: Prisma.SpecializationCreateOrConnectWithoutRequestsInput
   upsert?: Prisma.SpecializationUpsertWithoutRequestsInput
+  disconnect?: Prisma.SpecializationWhereInput | boolean
+  delete?: Prisma.SpecializationWhereInput | boolean
   connect?: Prisma.SpecializationWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.SpecializationUpdateToOneWithWhereWithoutRequestsInput, Prisma.SpecializationUpdateWithoutRequestsInput>, Prisma.SpecializationUncheckedUpdateWithoutRequestsInput>
 }

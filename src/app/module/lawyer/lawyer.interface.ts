@@ -1,40 +1,50 @@
-import { LawyerVerificationStatus } from "../../../../prisma/generated/prisma/enums";
+import {
+	LawyerVerificationStatus,
+	UserStatus,
+} from "../../../../prisma/generated/prisma/enums";
 
 export interface IApplyAsLawyerPayload {
-  user: {
-    name: string;
-    email: string;
-  };
+	user: {
+		name: string;
+		email: string;
+	};
 
-  lawyer: {
-    address?: string;
-    licenseNumber: string;
-    qualifications: string;
-    experienceYears: number;
-    bio?: string;
-    consultationFee?: number;
-    contactNumber?: string;
-    specializationIds: string[];
-  };
+	lawyer: {
+		address?: string;
+		licenseNumber: string;
+		qualifications: string;
+		experienceYears: number;
+		bio?: string;
+		consultationFee?: number;
+		contactNumber?: string;
+		specializationIds: string[];
+		newPracticeArea?: string;
+	};
 }
 
 export interface IVerifyLawyerEmailPayload {
-  email: string;
-  otp: string;
+	email: string;
+	otp: string;
 }
 
 export interface IApproveLawyerPayload {
-  lawyerId: string;
-  verificationStatus: LawyerVerificationStatus;
-  rejectionReason?: string;
+	lawyerId: string;
+	verificationStatus: LawyerVerificationStatus;
+	rejectionReason?: string;
 }
 
 export interface IUpdateLawyerProfilePayload {
-  address?: string;
-  bio?: string;
-  consultationFee?: number;
-  contactNumber?: string;
-  qualifications?: string;
-  experienceYears?: number;
-  specializationIds?: string[];
+	address?: string;
+	bio?: string;
+	consultationFee?: number;
+	contactNumber?: string;
+	qualifications?: string;
+	experienceYears?: number;
+	specializationIds?: string[];
 }
+
+export interface IUpdateLawyerStatusPayload {
+	status: Extract<UserStatus, "ACTIVE" | "BLOCKED">;
+}
+
+export type LawyerDocumentType = "resume" | "additionalFile";

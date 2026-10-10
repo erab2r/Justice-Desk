@@ -1,5 +1,7 @@
 # Justice Desk
 
+> Lawyer consultation, appointment scheduling, payment, and legal case-management API.
+
 Justice Desk is a TypeScript and Express API for legal consultation, lawyer scheduling, appointments, payments, and case collaboration.
 
 ## Stack
@@ -18,11 +20,11 @@ Justice Desk is a TypeScript and Express API for legal consultation, lawyer sche
 
 Install the following before starting the API:
 
-- Node.js
+- Node.js 20 or newer
 - PostgreSQL
 - Redis
-- Stripe CLI if Stripe webhooks are used
 - Cloudinary, SMTP, Stripe, and bKash credentials for the related features
+- Stripe CLI only when testing Stripe webhooks locally
 
 ## Installation
 
@@ -30,7 +32,19 @@ Install the following before starting the API:
 npm install
 ```
 
-Create a `.env` file in the project root. The application reads these variables from `.env`:
+Copy `.env.example` to `.env` and replace the placeholders with local or hosted service credentials:
+
+```bash
+cp .env.example .env
+```
+
+On Windows PowerShell:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+The application reads these variables from `.env`:
 
 ```env
 NODE_ENV=development
@@ -91,14 +105,22 @@ The Prisma schema is split across `prisma/schema`. Prisma is configured through 
 
 ```bash
 npx prisma generate
-npx prisma migrate dev
+npx prisma migrate deploy
 ```
+
+For local development, create a new migration after changing the schema:
+
+```bash
+npx prisma migrate dev --name describe_your_change
+```
+
+Never use `prisma migrate reset` against a database containing data. Production and shared environments should use committed migrations with `prisma migrate deploy`.
 
 The server connects to PostgreSQL, Redis, and SMTP during startup. It also seeds the configured super-admin, tester-admin, and tester-lawyer accounts when the relevant environment variables are present.
 
 ## Running the API
 
-Development mode starts the API with watch mode and starts Stripe webhook forwarding to port `5000`:
+Development mode starts the API with watch mode:
 
 ```bash
 npm run dev
@@ -116,6 +138,8 @@ Build and run the compiled server:
 npm run build
 npm start
 ```
+
+The server startup sequence connects to PostgreSQL, Redis, and SMTP, runs the configured seed helpers, removes expired unverified lawyer applications, and then starts the HTTP listener.
 
 The default base URL is:
 
@@ -233,6 +257,27 @@ Legal documents associate automatically with the lawyer assigned to the case, re
 
 Lawyers or administrators create invoices for a case with the invoice route. Clients can view their invoices and pay according to the configured payment flow. Invoice status values include `UNPAID`, `PAID`, `PARTIALLY_PAID`, `OVERDUE`, and `CANCELLED`.
 
+## Roles and authorization
+
+The API uses JWT access tokens. Send a token on protected requests using either:
+
+```http
+Authorization: Bearer <access-token>
+```
+
+or the `accessToken` cookie.
+
+Available roles:
+
+| Role | Responsibility |
+| --- | --- |
+| `SUPER_ADMIN` | Full administrative access |
+| `ADMIN` | Administrative management of lawyers, specializations, cases, and payments |
+| `LAWYER` | Lawyer profile, availability, assigned cases, documents, and appointments |
+| `CLIENT` | Client profile, appointments, cases, documents, and payments |
+
+Blocked or deleted users cannot use protected endpoints. Most lawyer and case resources also enforce ownership or assignment checks in the service layer.
+
 ## Main Route Groups
 
 All routes are prefixed with `/api/v1`:
@@ -254,6 +299,48 @@ All routes are prefixed with `/api/v1`:
 
 The Postman collection in `Justice-Desk.postman_collection.json` contains request examples and environment variables for these workflows.
 
+## Lawyer management
+
+The lawyer module supports both public discovery and administrative management.
+
+| Method | Endpoint | Access | Purpose |
+| --- | --- | --- | --- |
+| `POST` | `/lawyer/apply-lw` | Public, multipart | Submit a lawyer application with `resume`, `additionalFiles`, and JSON `user`/`lawyer` fields |
+| `POST` | `/lawyer/verify-email` | Public | Verify an application email |
+| `PATCH` | `/lawyer/approve-lw` | Admin, Super Admin | Approve or reject the lawyer application |
+| `GET` | `/lawyer/all-lawyers` | Admin, Super Admin | Paginated lawyer administration list |
+| `PATCH` | `/lawyer/profile` | Lawyer | Edit the authenticated lawyer's profile |
+| `PATCH` | `/lawyer/:lawyerId/profile` | Lawyer owner, Admin, Super Admin | Edit a specific lawyer profile |
+| `PATCH` | `/lawyer/:lawyerId/status` | Admin, Super Admin | Activate or deactivate a lawyer |
+| `PATCH` | `/lawyer/:lawyerId/suspension` | Admin, Super Admin | Suspend or unsuspend an approved lawyer |
+| `DELETE` | `/lawyer/:lawyerId` | Admin, Super Admin | Soft-delete a lawyer and related account access |
+| `GET` | `/lawyer/:lawyerId/documents` | Lawyer owner, Admin, Super Admin | List lawyer application documents |
+| `PATCH` | `/lawyer/:lawyerId/documents` | Lawyer owner, Admin, Super Admin | Upload or replace resume/additional files |
+| `DELETE` | `/lawyer/:lawyerId/documents` | Lawyer owner, Admin, Super Admin | Delete a resume or additional file |
+| `GET` | `/lawyer/all-lw` | Public | List active approved lawyers |
+| `GET` | `/lawyer/:lawyerId` | Public | View an active approved lawyer profile |
+
+`DELETE /lawyer/:lawyerId` is a soft delete. It preserves historical case and appointment records while preventing future access.
+
+## Specialization and practice-area approval
+
+Existing specializations selected during a lawyer application are assigned directly to the lawyer. A genuinely new `newPracticeArea` is stored on a pending specialization request and is not inserted into the public specialization list immediately.
+
+| Method | Endpoint | Access | Purpose |
+| --- | --- | --- | --- |
+| `GET` | `/specialization` | Public | List usable specializations |
+| `POST` | `/specialization` | Admin, Super Admin | Create an admin-managed specialization |
+| `PATCH` | `/specialization/:specializationId` | Admin, Super Admin | Update a specialization |
+| `DELETE` | `/specialization/:specializationId` | Admin, Super Admin | Delete a specialization |
+| `POST` | `/specialization/requests` | Lawyer | Request an existing specialization or submit `newPracticeArea` |
+| `GET` | `/specialization/requests` | Admin, Super Admin | List specialization requests |
+| `PATCH` | `/specialization/requests/review` | Admin, Super Admin | Approve or reject a specialization request |
+| `GET` | `/specialization/me` | Lawyer | List the authenticated lawyer's approved specializations |
+| `DELETE` | `/specialization/me/:specializationId` | Lawyer | Remove an approved specialization |
+| `GET` | `/specialization/lawyer/:lawyerId` | Public | View a lawyer's approved specializations |
+
+For a new practice area, approval creates the `Specialization` row and the `LawyerSpecialization` assignment in one transaction. Rejection removes only the pending request.
+
 ## Validation and Quality Checks
 
 ```bash
@@ -274,22 +361,39 @@ The repository currently reports existing Biome diagnostics in parts of the code
 ## Project Structure
 
 ```text
-prisma/
-  schema/       Prisma schema files
-  migrations/   Database migrations
-  generated/    Generated Prisma client
-src/
-  app.ts        Express application and route mounting
-  server.ts     Startup, service checks, seeding, and HTTP listener
-  app/
-    config/     Environment configuration
-    lib/        Prisma, Redis, mail, storage, payment, and auth integrations
-    middleware/ Authentication, validation, errors, and 404 handling
-    module/     Feature modules and route/controller/service layers
-    utils/      Shared errors, JWT, responses, async handling, and seed logic
-scripts/
-  dev.ts        Development API and Stripe webhook launcher
+.
+├── prisma/
+│   ├── schema/                 # Split Prisma schema files
+│   │   ├── schema.prisma       # Generator and datasource configuration
+│   │   ├── enums.prisma        # Shared enums
+│   │   └── *.prisma            # Domain models and relations
+│   ├── migrations/             # Versioned database migrations
+│   └── generated/prisma/       # Generated Prisma 7 client (do not edit manually)
+├── src/
+│   ├── app.ts                  # Express app and route mounting
+│   ├── server.ts               # Startup, connections, seeding, and HTTP listener
+│   └── app/
+│       ├── config/             # Environment configuration
+│       ├── interfaces/         # Shared request/query types
+│       ├── lib/                # Prisma, Redis, mail, storage, and payments
+│       ├── middleware/         # Auth, validation, errors, and 404 handling
+│       ├── module/             # Feature modules
+│       │   └── <feature>/
+│       │       ├── *.route.ts       # Route definitions and role guards
+│       │       ├── *.controller.ts  # HTTP request/response handling
+│       │       ├── *.service.ts     # Business logic and Prisma operations
+│       │       ├── *.validation.ts  # Zod schemas
+│       │       └── *.interface.ts   # Feature-specific types
+│       ├── templates/           # Email templates
+│       ├── utils/               # Errors, JWT, responses, async helpers, and seeds
+├── .env.example                # Environment variable template
+├── prisma7.config.ts           # Prisma 7 configuration
+├── tsup.config.ts              # Build configuration
+├── tsconfig.json               # TypeScript configuration
+└── package.json                # Scripts and dependencies
 ```
+
+Each feature module follows the route → controller → service pattern. Controllers should remain thin; authorization, validation-sensitive business rules, transactions, and Prisma queries belong in services.
 
 ## API Response and Error Handling
 
@@ -303,4 +407,4 @@ For local Stripe testing, log in to the Stripe CLI and run:
 stripe listen --forward-to localhost:5000/api/v1/appointment/stripe/webhook
 ```
 
-The `npm run dev` script starts this forwarding process automatically, but the Stripe CLI must be installed and authenticated first.
+Run this in a separate terminal; `npm run dev` only starts the API watcher. The Stripe CLI must be installed and authenticated first.

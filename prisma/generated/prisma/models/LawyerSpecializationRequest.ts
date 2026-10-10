@@ -28,6 +28,7 @@ export type LawyerSpecializationRequestMinAggregateOutputType = {
   id: string | null
   lawyerId: string | null
   specializationId: string | null
+  newPracticeArea: string | null
   status: $Enums.SpecializationRequestStatus | null
   rejectionReason: string | null
   reviewedBy: string | null
@@ -40,6 +41,7 @@ export type LawyerSpecializationRequestMaxAggregateOutputType = {
   id: string | null
   lawyerId: string | null
   specializationId: string | null
+  newPracticeArea: string | null
   status: $Enums.SpecializationRequestStatus | null
   rejectionReason: string | null
   reviewedBy: string | null
@@ -52,6 +54,7 @@ export type LawyerSpecializationRequestCountAggregateOutputType = {
   id: number
   lawyerId: number
   specializationId: number
+  newPracticeArea: number
   status: number
   rejectionReason: number
   reviewedBy: number
@@ -66,6 +69,7 @@ export type LawyerSpecializationRequestMinAggregateInputType = {
   id?: true
   lawyerId?: true
   specializationId?: true
+  newPracticeArea?: true
   status?: true
   rejectionReason?: true
   reviewedBy?: true
@@ -78,6 +82,7 @@ export type LawyerSpecializationRequestMaxAggregateInputType = {
   id?: true
   lawyerId?: true
   specializationId?: true
+  newPracticeArea?: true
   status?: true
   rejectionReason?: true
   reviewedBy?: true
@@ -90,6 +95,7 @@ export type LawyerSpecializationRequestCountAggregateInputType = {
   id?: true
   lawyerId?: true
   specializationId?: true
+  newPracticeArea?: true
   status?: true
   rejectionReason?: true
   reviewedBy?: true
@@ -174,7 +180,8 @@ export type LawyerSpecializationRequestGroupByArgs<ExtArgs extends runtime.Types
 export type LawyerSpecializationRequestGroupByOutputType = {
   id: string
   lawyerId: string
-  specializationId: string
+  specializationId: string | null
+  newPracticeArea: string | null
   status: $Enums.SpecializationRequestStatus
   rejectionReason: string | null
   reviewedBy: string | null
@@ -207,7 +214,8 @@ export type LawyerSpecializationRequestWhereInput = {
   NOT?: Prisma.LawyerSpecializationRequestWhereInput | Prisma.LawyerSpecializationRequestWhereInput[]
   id?: Prisma.StringFilter<"LawyerSpecializationRequest"> | string
   lawyerId?: Prisma.StringFilter<"LawyerSpecializationRequest"> | string
-  specializationId?: Prisma.StringFilter<"LawyerSpecializationRequest"> | string
+  specializationId?: Prisma.StringNullableFilter<"LawyerSpecializationRequest"> | string | null
+  newPracticeArea?: Prisma.StringNullableFilter<"LawyerSpecializationRequest"> | string | null
   status?: Prisma.EnumSpecializationRequestStatusFilter<"LawyerSpecializationRequest"> | $Enums.SpecializationRequestStatus
   rejectionReason?: Prisma.StringNullableFilter<"LawyerSpecializationRequest"> | string | null
   reviewedBy?: Prisma.StringNullableFilter<"LawyerSpecializationRequest"> | string | null
@@ -215,13 +223,14 @@ export type LawyerSpecializationRequestWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"LawyerSpecializationRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LawyerSpecializationRequest"> | Date | string
   lawyer?: Prisma.XOR<Prisma.LawyerScalarRelationFilter, Prisma.LawyerWhereInput>
-  specialization?: Prisma.XOR<Prisma.SpecializationScalarRelationFilter, Prisma.SpecializationWhereInput>
+  specialization?: Prisma.XOR<Prisma.SpecializationNullableScalarRelationFilter, Prisma.SpecializationWhereInput> | null
 }
 
 export type LawyerSpecializationRequestOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   lawyerId?: Prisma.SortOrder
-  specializationId?: Prisma.SortOrder
+  specializationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  newPracticeArea?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewedBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -239,7 +248,8 @@ export type LawyerSpecializationRequestWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.LawyerSpecializationRequestWhereInput[]
   NOT?: Prisma.LawyerSpecializationRequestWhereInput | Prisma.LawyerSpecializationRequestWhereInput[]
   lawyerId?: Prisma.StringFilter<"LawyerSpecializationRequest"> | string
-  specializationId?: Prisma.StringFilter<"LawyerSpecializationRequest"> | string
+  specializationId?: Prisma.StringNullableFilter<"LawyerSpecializationRequest"> | string | null
+  newPracticeArea?: Prisma.StringNullableFilter<"LawyerSpecializationRequest"> | string | null
   status?: Prisma.EnumSpecializationRequestStatusFilter<"LawyerSpecializationRequest"> | $Enums.SpecializationRequestStatus
   rejectionReason?: Prisma.StringNullableFilter<"LawyerSpecializationRequest"> | string | null
   reviewedBy?: Prisma.StringNullableFilter<"LawyerSpecializationRequest"> | string | null
@@ -247,13 +257,14 @@ export type LawyerSpecializationRequestWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"LawyerSpecializationRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LawyerSpecializationRequest"> | Date | string
   lawyer?: Prisma.XOR<Prisma.LawyerScalarRelationFilter, Prisma.LawyerWhereInput>
-  specialization?: Prisma.XOR<Prisma.SpecializationScalarRelationFilter, Prisma.SpecializationWhereInput>
+  specialization?: Prisma.XOR<Prisma.SpecializationNullableScalarRelationFilter, Prisma.SpecializationWhereInput> | null
 }, "id" | "lawyerId_specializationId_status">
 
 export type LawyerSpecializationRequestOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   lawyerId?: Prisma.SortOrder
-  specializationId?: Prisma.SortOrder
+  specializationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  newPracticeArea?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewedBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -271,7 +282,8 @@ export type LawyerSpecializationRequestScalarWhereWithAggregatesInput = {
   NOT?: Prisma.LawyerSpecializationRequestScalarWhereWithAggregatesInput | Prisma.LawyerSpecializationRequestScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"LawyerSpecializationRequest"> | string
   lawyerId?: Prisma.StringWithAggregatesFilter<"LawyerSpecializationRequest"> | string
-  specializationId?: Prisma.StringWithAggregatesFilter<"LawyerSpecializationRequest"> | string
+  specializationId?: Prisma.StringNullableWithAggregatesFilter<"LawyerSpecializationRequest"> | string | null
+  newPracticeArea?: Prisma.StringNullableWithAggregatesFilter<"LawyerSpecializationRequest"> | string | null
   status?: Prisma.EnumSpecializationRequestStatusWithAggregatesFilter<"LawyerSpecializationRequest"> | $Enums.SpecializationRequestStatus
   rejectionReason?: Prisma.StringNullableWithAggregatesFilter<"LawyerSpecializationRequest"> | string | null
   reviewedBy?: Prisma.StringNullableWithAggregatesFilter<"LawyerSpecializationRequest"> | string | null
@@ -282,6 +294,7 @@ export type LawyerSpecializationRequestScalarWhereWithAggregatesInput = {
 
 export type LawyerSpecializationRequestCreateInput = {
   id?: string
+  newPracticeArea?: string | null
   status?: $Enums.SpecializationRequestStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -289,13 +302,14 @@ export type LawyerSpecializationRequestCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lawyer: Prisma.LawyerCreateNestedOneWithoutSpecializationRequestsInput
-  specialization: Prisma.SpecializationCreateNestedOneWithoutRequestsInput
+  specialization?: Prisma.SpecializationCreateNestedOneWithoutRequestsInput
 }
 
 export type LawyerSpecializationRequestUncheckedCreateInput = {
   id?: string
   lawyerId: string
-  specializationId: string
+  specializationId?: string | null
+  newPracticeArea?: string | null
   status?: $Enums.SpecializationRequestStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -306,6 +320,7 @@ export type LawyerSpecializationRequestUncheckedCreateInput = {
 
 export type LawyerSpecializationRequestUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  newPracticeArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSpecializationRequestStatusFieldUpdateOperationsInput | $Enums.SpecializationRequestStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -313,13 +328,14 @@ export type LawyerSpecializationRequestUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lawyer?: Prisma.LawyerUpdateOneRequiredWithoutSpecializationRequestsNestedInput
-  specialization?: Prisma.SpecializationUpdateOneRequiredWithoutRequestsNestedInput
+  specialization?: Prisma.SpecializationUpdateOneWithoutRequestsNestedInput
 }
 
 export type LawyerSpecializationRequestUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lawyerId?: Prisma.StringFieldUpdateOperationsInput | string
-  specializationId?: Prisma.StringFieldUpdateOperationsInput | string
+  specializationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  newPracticeArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSpecializationRequestStatusFieldUpdateOperationsInput | $Enums.SpecializationRequestStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -331,7 +347,8 @@ export type LawyerSpecializationRequestUncheckedUpdateInput = {
 export type LawyerSpecializationRequestCreateManyInput = {
   id?: string
   lawyerId: string
-  specializationId: string
+  specializationId?: string | null
+  newPracticeArea?: string | null
   status?: $Enums.SpecializationRequestStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -342,6 +359,7 @@ export type LawyerSpecializationRequestCreateManyInput = {
 
 export type LawyerSpecializationRequestUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  newPracticeArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSpecializationRequestStatusFieldUpdateOperationsInput | $Enums.SpecializationRequestStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -353,7 +371,8 @@ export type LawyerSpecializationRequestUpdateManyMutationInput = {
 export type LawyerSpecializationRequestUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lawyerId?: Prisma.StringFieldUpdateOperationsInput | string
-  specializationId?: Prisma.StringFieldUpdateOperationsInput | string
+  specializationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  newPracticeArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSpecializationRequestStatusFieldUpdateOperationsInput | $Enums.SpecializationRequestStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -382,6 +401,7 @@ export type LawyerSpecializationRequestCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lawyerId?: Prisma.SortOrder
   specializationId?: Prisma.SortOrder
+  newPracticeArea?: Prisma.SortOrder
   status?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrder
   reviewedBy?: Prisma.SortOrder
@@ -394,6 +414,7 @@ export type LawyerSpecializationRequestMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lawyerId?: Prisma.SortOrder
   specializationId?: Prisma.SortOrder
+  newPracticeArea?: Prisma.SortOrder
   status?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrder
   reviewedBy?: Prisma.SortOrder
@@ -406,6 +427,7 @@ export type LawyerSpecializationRequestMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lawyerId?: Prisma.SortOrder
   specializationId?: Prisma.SortOrder
+  newPracticeArea?: Prisma.SortOrder
   status?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrder
   reviewedBy?: Prisma.SortOrder
@@ -504,18 +526,20 @@ export type EnumSpecializationRequestStatusFieldUpdateOperationsInput = {
 
 export type LawyerSpecializationRequestCreateWithoutLawyerInput = {
   id?: string
+  newPracticeArea?: string | null
   status?: $Enums.SpecializationRequestStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
   reviewedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  specialization: Prisma.SpecializationCreateNestedOneWithoutRequestsInput
+  specialization?: Prisma.SpecializationCreateNestedOneWithoutRequestsInput
 }
 
 export type LawyerSpecializationRequestUncheckedCreateWithoutLawyerInput = {
   id?: string
-  specializationId: string
+  specializationId?: string | null
+  newPracticeArea?: string | null
   status?: $Enums.SpecializationRequestStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -556,7 +580,8 @@ export type LawyerSpecializationRequestScalarWhereInput = {
   NOT?: Prisma.LawyerSpecializationRequestScalarWhereInput | Prisma.LawyerSpecializationRequestScalarWhereInput[]
   id?: Prisma.StringFilter<"LawyerSpecializationRequest"> | string
   lawyerId?: Prisma.StringFilter<"LawyerSpecializationRequest"> | string
-  specializationId?: Prisma.StringFilter<"LawyerSpecializationRequest"> | string
+  specializationId?: Prisma.StringNullableFilter<"LawyerSpecializationRequest"> | string | null
+  newPracticeArea?: Prisma.StringNullableFilter<"LawyerSpecializationRequest"> | string | null
   status?: Prisma.EnumSpecializationRequestStatusFilter<"LawyerSpecializationRequest"> | $Enums.SpecializationRequestStatus
   rejectionReason?: Prisma.StringNullableFilter<"LawyerSpecializationRequest"> | string | null
   reviewedBy?: Prisma.StringNullableFilter<"LawyerSpecializationRequest"> | string | null
@@ -567,6 +592,7 @@ export type LawyerSpecializationRequestScalarWhereInput = {
 
 export type LawyerSpecializationRequestCreateWithoutSpecializationInput = {
   id?: string
+  newPracticeArea?: string | null
   status?: $Enums.SpecializationRequestStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -579,6 +605,7 @@ export type LawyerSpecializationRequestCreateWithoutSpecializationInput = {
 export type LawyerSpecializationRequestUncheckedCreateWithoutSpecializationInput = {
   id?: string
   lawyerId: string
+  newPracticeArea?: string | null
   status?: $Enums.SpecializationRequestStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -615,7 +642,8 @@ export type LawyerSpecializationRequestUpdateManyWithWhereWithoutSpecializationI
 
 export type LawyerSpecializationRequestCreateManyLawyerInput = {
   id?: string
-  specializationId: string
+  specializationId?: string | null
+  newPracticeArea?: string | null
   status?: $Enums.SpecializationRequestStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -626,18 +654,20 @@ export type LawyerSpecializationRequestCreateManyLawyerInput = {
 
 export type LawyerSpecializationRequestUpdateWithoutLawyerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  newPracticeArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSpecializationRequestStatusFieldUpdateOperationsInput | $Enums.SpecializationRequestStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  specialization?: Prisma.SpecializationUpdateOneRequiredWithoutRequestsNestedInput
+  specialization?: Prisma.SpecializationUpdateOneWithoutRequestsNestedInput
 }
 
 export type LawyerSpecializationRequestUncheckedUpdateWithoutLawyerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  specializationId?: Prisma.StringFieldUpdateOperationsInput | string
+  specializationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  newPracticeArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSpecializationRequestStatusFieldUpdateOperationsInput | $Enums.SpecializationRequestStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -648,7 +678,8 @@ export type LawyerSpecializationRequestUncheckedUpdateWithoutLawyerInput = {
 
 export type LawyerSpecializationRequestUncheckedUpdateManyWithoutLawyerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  specializationId?: Prisma.StringFieldUpdateOperationsInput | string
+  specializationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  newPracticeArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSpecializationRequestStatusFieldUpdateOperationsInput | $Enums.SpecializationRequestStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -660,6 +691,7 @@ export type LawyerSpecializationRequestUncheckedUpdateManyWithoutLawyerInput = {
 export type LawyerSpecializationRequestCreateManySpecializationInput = {
   id?: string
   lawyerId: string
+  newPracticeArea?: string | null
   status?: $Enums.SpecializationRequestStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -670,6 +702,7 @@ export type LawyerSpecializationRequestCreateManySpecializationInput = {
 
 export type LawyerSpecializationRequestUpdateWithoutSpecializationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  newPracticeArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSpecializationRequestStatusFieldUpdateOperationsInput | $Enums.SpecializationRequestStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -682,6 +715,7 @@ export type LawyerSpecializationRequestUpdateWithoutSpecializationInput = {
 export type LawyerSpecializationRequestUncheckedUpdateWithoutSpecializationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lawyerId?: Prisma.StringFieldUpdateOperationsInput | string
+  newPracticeArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSpecializationRequestStatusFieldUpdateOperationsInput | $Enums.SpecializationRequestStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -693,6 +727,7 @@ export type LawyerSpecializationRequestUncheckedUpdateWithoutSpecializationInput
 export type LawyerSpecializationRequestUncheckedUpdateManyWithoutSpecializationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lawyerId?: Prisma.StringFieldUpdateOperationsInput | string
+  newPracticeArea?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSpecializationRequestStatusFieldUpdateOperationsInput | $Enums.SpecializationRequestStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -707,6 +742,7 @@ export type LawyerSpecializationRequestSelect<ExtArgs extends runtime.Types.Exte
   id?: boolean
   lawyerId?: boolean
   specializationId?: boolean
+  newPracticeArea?: boolean
   status?: boolean
   rejectionReason?: boolean
   reviewedBy?: boolean
@@ -714,13 +750,14 @@ export type LawyerSpecializationRequestSelect<ExtArgs extends runtime.Types.Exte
   createdAt?: boolean
   updatedAt?: boolean
   lawyer?: boolean | Prisma.LawyerDefaultArgs<ExtArgs>
-  specialization?: boolean | Prisma.SpecializationDefaultArgs<ExtArgs>
+  specialization?: boolean | Prisma.LawyerSpecializationRequest$specializationArgs<ExtArgs>
 }, ExtArgs["result"]["lawyerSpecializationRequest"]>
 
 export type LawyerSpecializationRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   lawyerId?: boolean
   specializationId?: boolean
+  newPracticeArea?: boolean
   status?: boolean
   rejectionReason?: boolean
   reviewedBy?: boolean
@@ -728,13 +765,14 @@ export type LawyerSpecializationRequestSelectCreateManyAndReturn<ExtArgs extends
   createdAt?: boolean
   updatedAt?: boolean
   lawyer?: boolean | Prisma.LawyerDefaultArgs<ExtArgs>
-  specialization?: boolean | Prisma.SpecializationDefaultArgs<ExtArgs>
+  specialization?: boolean | Prisma.LawyerSpecializationRequest$specializationArgs<ExtArgs>
 }, ExtArgs["result"]["lawyerSpecializationRequest"]>
 
 export type LawyerSpecializationRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   lawyerId?: boolean
   specializationId?: boolean
+  newPracticeArea?: boolean
   status?: boolean
   rejectionReason?: boolean
   reviewedBy?: boolean
@@ -742,13 +780,14 @@ export type LawyerSpecializationRequestSelectUpdateManyAndReturn<ExtArgs extends
   createdAt?: boolean
   updatedAt?: boolean
   lawyer?: boolean | Prisma.LawyerDefaultArgs<ExtArgs>
-  specialization?: boolean | Prisma.SpecializationDefaultArgs<ExtArgs>
+  specialization?: boolean | Prisma.LawyerSpecializationRequest$specializationArgs<ExtArgs>
 }, ExtArgs["result"]["lawyerSpecializationRequest"]>
 
 export type LawyerSpecializationRequestSelectScalar = {
   id?: boolean
   lawyerId?: boolean
   specializationId?: boolean
+  newPracticeArea?: boolean
   status?: boolean
   rejectionReason?: boolean
   reviewedBy?: boolean
@@ -757,30 +796,31 @@ export type LawyerSpecializationRequestSelectScalar = {
   updatedAt?: boolean
 }
 
-export type LawyerSpecializationRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lawyerId" | "specializationId" | "status" | "rejectionReason" | "reviewedBy" | "reviewedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["lawyerSpecializationRequest"]>
+export type LawyerSpecializationRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lawyerId" | "specializationId" | "newPracticeArea" | "status" | "rejectionReason" | "reviewedBy" | "reviewedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["lawyerSpecializationRequest"]>
 export type LawyerSpecializationRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lawyer?: boolean | Prisma.LawyerDefaultArgs<ExtArgs>
-  specialization?: boolean | Prisma.SpecializationDefaultArgs<ExtArgs>
+  specialization?: boolean | Prisma.LawyerSpecializationRequest$specializationArgs<ExtArgs>
 }
 export type LawyerSpecializationRequestIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lawyer?: boolean | Prisma.LawyerDefaultArgs<ExtArgs>
-  specialization?: boolean | Prisma.SpecializationDefaultArgs<ExtArgs>
+  specialization?: boolean | Prisma.LawyerSpecializationRequest$specializationArgs<ExtArgs>
 }
 export type LawyerSpecializationRequestIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lawyer?: boolean | Prisma.LawyerDefaultArgs<ExtArgs>
-  specialization?: boolean | Prisma.SpecializationDefaultArgs<ExtArgs>
+  specialization?: boolean | Prisma.LawyerSpecializationRequest$specializationArgs<ExtArgs>
 }
 
 export type $LawyerSpecializationRequestPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "LawyerSpecializationRequest"
   objects: {
     lawyer: Prisma.$LawyerPayload<ExtArgs>
-    specialization: Prisma.$SpecializationPayload<ExtArgs>
+    specialization: Prisma.$SpecializationPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     lawyerId: string
-    specializationId: string
+    specializationId: string | null
+    newPracticeArea: string | null
     status: $Enums.SpecializationRequestStatus
     rejectionReason: string | null
     reviewedBy: string | null
@@ -1182,7 +1222,7 @@ readonly fields: LawyerSpecializationRequestFieldRefs;
 export interface Prisma__LawyerSpecializationRequestClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   lawyer<T extends Prisma.LawyerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LawyerDefaultArgs<ExtArgs>>): Prisma.Prisma__LawyerClient<runtime.Types.Result.GetResult<Prisma.$LawyerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  specialization<T extends Prisma.SpecializationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SpecializationDefaultArgs<ExtArgs>>): Prisma.Prisma__SpecializationClient<runtime.Types.Result.GetResult<Prisma.$SpecializationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  specialization<T extends Prisma.LawyerSpecializationRequest$specializationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LawyerSpecializationRequest$specializationArgs<ExtArgs>>): Prisma.Prisma__SpecializationClient<runtime.Types.Result.GetResult<Prisma.$SpecializationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1215,6 +1255,7 @@ export interface LawyerSpecializationRequestFieldRefs {
   readonly id: Prisma.FieldRef<"LawyerSpecializationRequest", 'String'>
   readonly lawyerId: Prisma.FieldRef<"LawyerSpecializationRequest", 'String'>
   readonly specializationId: Prisma.FieldRef<"LawyerSpecializationRequest", 'String'>
+  readonly newPracticeArea: Prisma.FieldRef<"LawyerSpecializationRequest", 'String'>
   readonly status: Prisma.FieldRef<"LawyerSpecializationRequest", 'SpecializationRequestStatus'>
   readonly rejectionReason: Prisma.FieldRef<"LawyerSpecializationRequest", 'String'>
   readonly reviewedBy: Prisma.FieldRef<"LawyerSpecializationRequest", 'String'>
@@ -1619,6 +1660,25 @@ export type LawyerSpecializationRequestDeleteManyArgs<ExtArgs extends runtime.Ty
    * Limit how many LawyerSpecializationRequests to delete.
    */
   limit?: number
+}
+
+/**
+ * LawyerSpecializationRequest.specialization
+ */
+export type LawyerSpecializationRequest$specializationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Specialization
+   */
+  select?: Prisma.SpecializationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Specialization
+   */
+  omit?: Prisma.SpecializationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SpecializationInclude<ExtArgs> | null
+  where?: Prisma.SpecializationWhereInput
 }
 
 /**

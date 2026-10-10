@@ -683,7 +683,9 @@ const updateCase = async (
 
     if (
         user.role !== Role.ADMIN &&
-        user.role !== Role.SUPER_ADMIN
+        user.role !== Role.SUPER_ADMIN &&
+        user.role !== Role.CLIENT &&
+        user.role !== Role.LAWYER
     ) {
         throw new AppError(
             httpStatus.FORBIDDEN,

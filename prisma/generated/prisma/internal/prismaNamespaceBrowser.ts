@@ -341,6 +341,7 @@ export const LawyerSpecializationRequestScalarFieldEnum = {
   id: 'id',
   lawyerId: 'lawyerId',
   specializationId: 'specializationId',
+  newPracticeArea: 'newPracticeArea',
   status: 'status',
   rejectionReason: 'rejectionReason',
   reviewedBy: 'reviewedBy',

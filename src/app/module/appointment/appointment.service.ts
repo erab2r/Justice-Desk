@@ -577,23 +577,8 @@ const stripeSuccessHandler = async (sessionId: string) => {
 		await finalizeStripeAppointmentWithRetry(appointmentId, session);
 	}
 
-	const appointment = await prisma.appointment.findUnique({
-		where: { id: appointmentId },
-		include: {
-			lawyer: { select: { id: true, name: true } },
-			schedule: true,
-			payment: true,
-		},
-	});
-
 	return {
-		message:
-			session.payment_status === "paid"
-				? "Payment completed successfully"
-				: "Payment is not completed",
-		sessionId: session.id,
-		stripePaymentStatus: session.payment_status,
-		appointment,
+		paymentSuccessful: session.payment_status === "paid",
 	};
 };
 
@@ -1039,7 +1024,7 @@ const getAllAppointments = async (query : IQuery) => {
 		orderBy: { [sortBy] : sortOrder },
 		include: {
 			client: { select: { id: true, name: true, email: true } },
-			lawyer: { select: { id: true, name: true, specialization: true } },
+			lawyer: { select: { id: true, name: true } },
 			schedule: true,
 			payment: true,
 		},
@@ -1068,7 +1053,7 @@ const getSingleAppointment = async (appointmentId : string, user : RequestUser) 
 		include: {
 			client: { select: { id: true, name: true, email: true, userId: true } },
 			lawyer: {
-				select: { id: true, name: true, specialization: true, userId: true },
+				select: { id: true, name: true, userId: true },
 			},
 			schedule: true,
 			payment: true,
