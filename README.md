@@ -318,9 +318,13 @@ The lawyer module supports both public discovery and administrative management.
 | `PATCH` | `/lawyer/:lawyerId/documents` | Lawyer owner, Admin, Super Admin | Upload or replace resume/additional files |
 | `DELETE` | `/lawyer/:lawyerId/documents` | Lawyer owner, Admin, Super Admin | Delete a resume or additional file |
 | `GET` | `/lawyer/all-lw` | Public | List active approved lawyers |
-| `GET` | `/lawyer/:lawyerId` | Public | View an active approved lawyer profile |
+| `GET` | `/lawyer/:lawyerId` | Public | View an active approved lawyer profile, contact details, rating aggregate, reviews, and future published schedules with available capacity |
+| `POST` | `/lawyer/reviews` | Client | Submit one rating/review after a completed or past confirmed appointment with the lawyer |
+| `GET` | `/lawyer/reviews/my` | Client | List the authenticated client's submitted lawyer reviews |
 
 `DELETE /lawyer/:lawyerId` is a soft delete. It preserves historical case and appointment records while preventing future access.
+
+Lawyer review submissions require a body containing `rating` (an integer from 1 to 5), `review_comment`, `user_id`, and `lawyer_id`. The authenticated client's `user_id` must match the token, and the client must have a completed appointment or a confirmed appointment whose scheduled end time has passed. A client can submit at most one review per lawyer. Lawyer aggregates start at `averageRating: 4.0` and `ratingCount: 1`; each accepted review updates both values transactionally.
 
 ## Specialization and practice-area approval
 

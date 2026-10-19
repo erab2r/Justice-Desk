@@ -276,6 +276,7 @@ export type UserWhereInput = {
   caseMessages?: Prisma.CaseMessageListRelationFilter
   caseReports?: Prisma.CaseReportListRelationFilter
   uploadedDocuments?: Prisma.LegalDocumentListRelationFilter
+  lawyerReviews?: Prisma.LawyerReviewListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -301,6 +302,7 @@ export type UserOrderByWithRelationInput = {
   caseMessages?: Prisma.CaseMessageOrderByRelationAggregateInput
   caseReports?: Prisma.CaseReportOrderByRelationAggregateInput
   uploadedDocuments?: Prisma.LegalDocumentOrderByRelationAggregateInput
+  lawyerReviews?: Prisma.LawyerReviewOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -329,6 +331,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   caseMessages?: Prisma.CaseMessageListRelationFilter
   caseReports?: Prisma.CaseReportListRelationFilter
   uploadedDocuments?: Prisma.LegalDocumentListRelationFilter
+  lawyerReviews?: Prisma.LawyerReviewListRelationFilter
 }, "id" | "email" | "googleId">
 
 export type UserOrderByWithAggregationInput = {
@@ -398,6 +401,7 @@ export type UserCreateInput = {
   caseMessages?: Prisma.CaseMessageCreateNestedManyWithoutSenderInput
   caseReports?: Prisma.CaseReportCreateNestedManyWithoutGeneratedByInput
   uploadedDocuments?: Prisma.LegalDocumentCreateNestedManyWithoutUploadedByInput
+  lawyerReviews?: Prisma.LawyerReviewCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -423,6 +427,7 @@ export type UserUncheckedCreateInput = {
   caseMessages?: Prisma.CaseMessageUncheckedCreateNestedManyWithoutSenderInput
   caseReports?: Prisma.CaseReportUncheckedCreateNestedManyWithoutGeneratedByInput
   uploadedDocuments?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  lawyerReviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -448,6 +453,7 @@ export type UserUpdateInput = {
   caseMessages?: Prisma.CaseMessageUpdateManyWithoutSenderNestedInput
   caseReports?: Prisma.CaseReportUpdateManyWithoutGeneratedByNestedInput
   uploadedDocuments?: Prisma.LegalDocumentUpdateManyWithoutUploadedByNestedInput
+  lawyerReviews?: Prisma.LawyerReviewUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -473,6 +479,7 @@ export type UserUncheckedUpdateInput = {
   caseMessages?: Prisma.CaseMessageUncheckedUpdateManyWithoutSenderNestedInput
   caseReports?: Prisma.CaseReportUncheckedUpdateManyWithoutGeneratedByNestedInput
   uploadedDocuments?: Prisma.LegalDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  lawyerReviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -673,6 +680,20 @@ export type UserUpdateOneRequiredWithoutLawyerNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLawyerInput, Prisma.UserUpdateWithoutLawyerInput>, Prisma.UserUncheckedUpdateWithoutLawyerInput>
 }
 
+export type UserCreateNestedOneWithoutLawyerReviewsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLawyerReviewsInput, Prisma.UserUncheckedCreateWithoutLawyerReviewsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLawyerReviewsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutLawyerReviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLawyerReviewsInput, Prisma.UserUncheckedCreateWithoutLawyerReviewsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLawyerReviewsInput
+  upsert?: Prisma.UserUpsertWithoutLawyerReviewsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLawyerReviewsInput, Prisma.UserUpdateWithoutLawyerReviewsInput>, Prisma.UserUncheckedUpdateWithoutLawyerReviewsInput>
+}
+
 export type UserCreateNestedOneWithoutUploadedDocumentsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutUploadedDocumentsInput, Prisma.UserUncheckedCreateWithoutUploadedDocumentsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutUploadedDocumentsInput
@@ -721,6 +742,7 @@ export type UserCreateWithoutCaseActivitiesInput = {
   caseMessages?: Prisma.CaseMessageCreateNestedManyWithoutSenderInput
   caseReports?: Prisma.CaseReportCreateNestedManyWithoutGeneratedByInput
   uploadedDocuments?: Prisma.LegalDocumentCreateNestedManyWithoutUploadedByInput
+  lawyerReviews?: Prisma.LawyerReviewCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCaseActivitiesInput = {
@@ -745,6 +767,7 @@ export type UserUncheckedCreateWithoutCaseActivitiesInput = {
   caseMessages?: Prisma.CaseMessageUncheckedCreateNestedManyWithoutSenderInput
   caseReports?: Prisma.CaseReportUncheckedCreateNestedManyWithoutGeneratedByInput
   uploadedDocuments?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  lawyerReviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCaseActivitiesInput = {
@@ -785,6 +808,7 @@ export type UserUpdateWithoutCaseActivitiesInput = {
   caseMessages?: Prisma.CaseMessageUpdateManyWithoutSenderNestedInput
   caseReports?: Prisma.CaseReportUpdateManyWithoutGeneratedByNestedInput
   uploadedDocuments?: Prisma.LegalDocumentUpdateManyWithoutUploadedByNestedInput
+  lawyerReviews?: Prisma.LawyerReviewUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCaseActivitiesInput = {
@@ -809,6 +833,7 @@ export type UserUncheckedUpdateWithoutCaseActivitiesInput = {
   caseMessages?: Prisma.CaseMessageUncheckedUpdateManyWithoutSenderNestedInput
   caseReports?: Prisma.CaseReportUncheckedUpdateManyWithoutGeneratedByNestedInput
   uploadedDocuments?: Prisma.LegalDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  lawyerReviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCaseMessagesInput = {
@@ -833,6 +858,7 @@ export type UserCreateWithoutCaseMessagesInput = {
   caseActivities?: Prisma.CaseActivityCreateNestedManyWithoutCreatedByInput
   caseReports?: Prisma.CaseReportCreateNestedManyWithoutGeneratedByInput
   uploadedDocuments?: Prisma.LegalDocumentCreateNestedManyWithoutUploadedByInput
+  lawyerReviews?: Prisma.LawyerReviewCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCaseMessagesInput = {
@@ -857,6 +883,7 @@ export type UserUncheckedCreateWithoutCaseMessagesInput = {
   caseActivities?: Prisma.CaseActivityUncheckedCreateNestedManyWithoutCreatedByInput
   caseReports?: Prisma.CaseReportUncheckedCreateNestedManyWithoutGeneratedByInput
   uploadedDocuments?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  lawyerReviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCaseMessagesInput = {
@@ -897,6 +924,7 @@ export type UserUpdateWithoutCaseMessagesInput = {
   caseActivities?: Prisma.CaseActivityUpdateManyWithoutCreatedByNestedInput
   caseReports?: Prisma.CaseReportUpdateManyWithoutGeneratedByNestedInput
   uploadedDocuments?: Prisma.LegalDocumentUpdateManyWithoutUploadedByNestedInput
+  lawyerReviews?: Prisma.LawyerReviewUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCaseMessagesInput = {
@@ -921,6 +949,7 @@ export type UserUncheckedUpdateWithoutCaseMessagesInput = {
   caseActivities?: Prisma.CaseActivityUncheckedUpdateManyWithoutCreatedByNestedInput
   caseReports?: Prisma.CaseReportUncheckedUpdateManyWithoutGeneratedByNestedInput
   uploadedDocuments?: Prisma.LegalDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  lawyerReviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCaseReportsInput = {
@@ -945,6 +974,7 @@ export type UserCreateWithoutCaseReportsInput = {
   caseActivities?: Prisma.CaseActivityCreateNestedManyWithoutCreatedByInput
   caseMessages?: Prisma.CaseMessageCreateNestedManyWithoutSenderInput
   uploadedDocuments?: Prisma.LegalDocumentCreateNestedManyWithoutUploadedByInput
+  lawyerReviews?: Prisma.LawyerReviewCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCaseReportsInput = {
@@ -969,6 +999,7 @@ export type UserUncheckedCreateWithoutCaseReportsInput = {
   caseActivities?: Prisma.CaseActivityUncheckedCreateNestedManyWithoutCreatedByInput
   caseMessages?: Prisma.CaseMessageUncheckedCreateNestedManyWithoutSenderInput
   uploadedDocuments?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  lawyerReviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCaseReportsInput = {
@@ -1009,6 +1040,7 @@ export type UserUpdateWithoutCaseReportsInput = {
   caseActivities?: Prisma.CaseActivityUpdateManyWithoutCreatedByNestedInput
   caseMessages?: Prisma.CaseMessageUpdateManyWithoutSenderNestedInput
   uploadedDocuments?: Prisma.LegalDocumentUpdateManyWithoutUploadedByNestedInput
+  lawyerReviews?: Prisma.LawyerReviewUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCaseReportsInput = {
@@ -1033,6 +1065,7 @@ export type UserUncheckedUpdateWithoutCaseReportsInput = {
   caseActivities?: Prisma.CaseActivityUncheckedUpdateManyWithoutCreatedByNestedInput
   caseMessages?: Prisma.CaseMessageUncheckedUpdateManyWithoutSenderNestedInput
   uploadedDocuments?: Prisma.LegalDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  lawyerReviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutClientInput = {
@@ -1057,6 +1090,7 @@ export type UserCreateWithoutClientInput = {
   caseMessages?: Prisma.CaseMessageCreateNestedManyWithoutSenderInput
   caseReports?: Prisma.CaseReportCreateNestedManyWithoutGeneratedByInput
   uploadedDocuments?: Prisma.LegalDocumentCreateNestedManyWithoutUploadedByInput
+  lawyerReviews?: Prisma.LawyerReviewCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutClientInput = {
@@ -1081,6 +1115,7 @@ export type UserUncheckedCreateWithoutClientInput = {
   caseMessages?: Prisma.CaseMessageUncheckedCreateNestedManyWithoutSenderInput
   caseReports?: Prisma.CaseReportUncheckedCreateNestedManyWithoutGeneratedByInput
   uploadedDocuments?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  lawyerReviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutClientInput = {
@@ -1121,6 +1156,7 @@ export type UserUpdateWithoutClientInput = {
   caseMessages?: Prisma.CaseMessageUpdateManyWithoutSenderNestedInput
   caseReports?: Prisma.CaseReportUpdateManyWithoutGeneratedByNestedInput
   uploadedDocuments?: Prisma.LegalDocumentUpdateManyWithoutUploadedByNestedInput
+  lawyerReviews?: Prisma.LawyerReviewUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutClientInput = {
@@ -1145,6 +1181,7 @@ export type UserUncheckedUpdateWithoutClientInput = {
   caseMessages?: Prisma.CaseMessageUncheckedUpdateManyWithoutSenderNestedInput
   caseReports?: Prisma.CaseReportUncheckedUpdateManyWithoutGeneratedByNestedInput
   uploadedDocuments?: Prisma.LegalDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  lawyerReviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLawyerInput = {
@@ -1169,6 +1206,7 @@ export type UserCreateWithoutLawyerInput = {
   caseMessages?: Prisma.CaseMessageCreateNestedManyWithoutSenderInput
   caseReports?: Prisma.CaseReportCreateNestedManyWithoutGeneratedByInput
   uploadedDocuments?: Prisma.LegalDocumentCreateNestedManyWithoutUploadedByInput
+  lawyerReviews?: Prisma.LawyerReviewCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLawyerInput = {
@@ -1193,6 +1231,7 @@ export type UserUncheckedCreateWithoutLawyerInput = {
   caseMessages?: Prisma.CaseMessageUncheckedCreateNestedManyWithoutSenderInput
   caseReports?: Prisma.CaseReportUncheckedCreateNestedManyWithoutGeneratedByInput
   uploadedDocuments?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  lawyerReviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLawyerInput = {
@@ -1233,6 +1272,7 @@ export type UserUpdateWithoutLawyerInput = {
   caseMessages?: Prisma.CaseMessageUpdateManyWithoutSenderNestedInput
   caseReports?: Prisma.CaseReportUpdateManyWithoutGeneratedByNestedInput
   uploadedDocuments?: Prisma.LegalDocumentUpdateManyWithoutUploadedByNestedInput
+  lawyerReviews?: Prisma.LawyerReviewUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLawyerInput = {
@@ -1253,6 +1293,123 @@ export type UserUncheckedUpdateWithoutLawyerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUncheckedUpdateOneWithoutUserNestedInput
+  caseActivities?: Prisma.CaseActivityUncheckedUpdateManyWithoutCreatedByNestedInput
+  caseMessages?: Prisma.CaseMessageUncheckedUpdateManyWithoutSenderNestedInput
+  caseReports?: Prisma.CaseReportUncheckedUpdateManyWithoutGeneratedByNestedInput
+  uploadedDocuments?: Prisma.LegalDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  lawyerReviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutLawyerReviewsInput = {
+  id?: string
+  name: string
+  email: string
+  password?: string | null
+  googleId?: string | null
+  authProvider?: $Enums.AuthProvider
+  emailVerified?: boolean
+  role?: $Enums.Role
+  status?: $Enums.UserStatus
+  needPasswordChange?: boolean
+  imageUrl?: string
+  imagePublicId?: string
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  client?: Prisma.ClientCreateNestedOneWithoutUserInput
+  lawyer?: Prisma.LawyerCreateNestedOneWithoutUserInput
+  caseActivities?: Prisma.CaseActivityCreateNestedManyWithoutCreatedByInput
+  caseMessages?: Prisma.CaseMessageCreateNestedManyWithoutSenderInput
+  caseReports?: Prisma.CaseReportCreateNestedManyWithoutGeneratedByInput
+  uploadedDocuments?: Prisma.LegalDocumentCreateNestedManyWithoutUploadedByInput
+}
+
+export type UserUncheckedCreateWithoutLawyerReviewsInput = {
+  id?: string
+  name: string
+  email: string
+  password?: string | null
+  googleId?: string | null
+  authProvider?: $Enums.AuthProvider
+  emailVerified?: boolean
+  role?: $Enums.Role
+  status?: $Enums.UserStatus
+  needPasswordChange?: boolean
+  imageUrl?: string
+  imagePublicId?: string
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  client?: Prisma.ClientUncheckedCreateNestedOneWithoutUserInput
+  lawyer?: Prisma.LawyerUncheckedCreateNestedOneWithoutUserInput
+  caseActivities?: Prisma.CaseActivityUncheckedCreateNestedManyWithoutCreatedByInput
+  caseMessages?: Prisma.CaseMessageUncheckedCreateNestedManyWithoutSenderInput
+  caseReports?: Prisma.CaseReportUncheckedCreateNestedManyWithoutGeneratedByInput
+  uploadedDocuments?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+}
+
+export type UserCreateOrConnectWithoutLawyerReviewsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutLawyerReviewsInput, Prisma.UserUncheckedCreateWithoutLawyerReviewsInput>
+}
+
+export type UserUpsertWithoutLawyerReviewsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLawyerReviewsInput, Prisma.UserUncheckedUpdateWithoutLawyerReviewsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLawyerReviewsInput, Prisma.UserUncheckedCreateWithoutLawyerReviewsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutLawyerReviewsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLawyerReviewsInput, Prisma.UserUncheckedUpdateWithoutLawyerReviewsInput>
+}
+
+export type UserUpdateWithoutLawyerReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authProvider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  needPasswordChange?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  imagePublicId?: Prisma.StringFieldUpdateOperationsInput | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  client?: Prisma.ClientUpdateOneWithoutUserNestedInput
+  lawyer?: Prisma.LawyerUpdateOneWithoutUserNestedInput
+  caseActivities?: Prisma.CaseActivityUpdateManyWithoutCreatedByNestedInput
+  caseMessages?: Prisma.CaseMessageUpdateManyWithoutSenderNestedInput
+  caseReports?: Prisma.CaseReportUpdateManyWithoutGeneratedByNestedInput
+  uploadedDocuments?: Prisma.LegalDocumentUpdateManyWithoutUploadedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutLawyerReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authProvider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  needPasswordChange?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  imagePublicId?: Prisma.StringFieldUpdateOperationsInput | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  client?: Prisma.ClientUncheckedUpdateOneWithoutUserNestedInput
+  lawyer?: Prisma.LawyerUncheckedUpdateOneWithoutUserNestedInput
   caseActivities?: Prisma.CaseActivityUncheckedUpdateManyWithoutCreatedByNestedInput
   caseMessages?: Prisma.CaseMessageUncheckedUpdateManyWithoutSenderNestedInput
   caseReports?: Prisma.CaseReportUncheckedUpdateManyWithoutGeneratedByNestedInput
@@ -1281,6 +1438,7 @@ export type UserCreateWithoutUploadedDocumentsInput = {
   caseActivities?: Prisma.CaseActivityCreateNestedManyWithoutCreatedByInput
   caseMessages?: Prisma.CaseMessageCreateNestedManyWithoutSenderInput
   caseReports?: Prisma.CaseReportCreateNestedManyWithoutGeneratedByInput
+  lawyerReviews?: Prisma.LawyerReviewCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUploadedDocumentsInput = {
@@ -1305,6 +1463,7 @@ export type UserUncheckedCreateWithoutUploadedDocumentsInput = {
   caseActivities?: Prisma.CaseActivityUncheckedCreateNestedManyWithoutCreatedByInput
   caseMessages?: Prisma.CaseMessageUncheckedCreateNestedManyWithoutSenderInput
   caseReports?: Prisma.CaseReportUncheckedCreateNestedManyWithoutGeneratedByInput
+  lawyerReviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUploadedDocumentsInput = {
@@ -1345,6 +1504,7 @@ export type UserUpdateWithoutUploadedDocumentsInput = {
   caseActivities?: Prisma.CaseActivityUpdateManyWithoutCreatedByNestedInput
   caseMessages?: Prisma.CaseMessageUpdateManyWithoutSenderNestedInput
   caseReports?: Prisma.CaseReportUpdateManyWithoutGeneratedByNestedInput
+  lawyerReviews?: Prisma.LawyerReviewUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUploadedDocumentsInput = {
@@ -1369,6 +1529,7 @@ export type UserUncheckedUpdateWithoutUploadedDocumentsInput = {
   caseActivities?: Prisma.CaseActivityUncheckedUpdateManyWithoutCreatedByNestedInput
   caseMessages?: Prisma.CaseMessageUncheckedUpdateManyWithoutSenderNestedInput
   caseReports?: Prisma.CaseReportUncheckedUpdateManyWithoutGeneratedByNestedInput
+  lawyerReviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1381,6 +1542,7 @@ export type UserCountOutputType = {
   caseMessages: number
   caseReports: number
   uploadedDocuments: number
+  lawyerReviews: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1388,6 +1550,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   caseMessages?: boolean | UserCountOutputTypeCountCaseMessagesArgs
   caseReports?: boolean | UserCountOutputTypeCountCaseReportsArgs
   uploadedDocuments?: boolean | UserCountOutputTypeCountUploadedDocumentsArgs
+  lawyerReviews?: boolean | UserCountOutputTypeCountLawyerReviewsArgs
 }
 
 /**
@@ -1428,6 +1591,13 @@ export type UserCountOutputTypeCountUploadedDocumentsArgs<ExtArgs extends runtim
   where?: Prisma.LegalDocumentWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLawyerReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LawyerReviewWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1452,6 +1622,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   caseMessages?: boolean | Prisma.User$caseMessagesArgs<ExtArgs>
   caseReports?: boolean | Prisma.User$caseReportsArgs<ExtArgs>
   uploadedDocuments?: boolean | Prisma.User$uploadedDocumentsArgs<ExtArgs>
+  lawyerReviews?: boolean | Prisma.User$lawyerReviewsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1520,6 +1691,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   caseMessages?: boolean | Prisma.User$caseMessagesArgs<ExtArgs>
   caseReports?: boolean | Prisma.User$caseReportsArgs<ExtArgs>
   uploadedDocuments?: boolean | Prisma.User$uploadedDocumentsArgs<ExtArgs>
+  lawyerReviews?: boolean | Prisma.User$lawyerReviewsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1534,6 +1706,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     caseMessages: Prisma.$CaseMessagePayload<ExtArgs>[]
     caseReports: Prisma.$CaseReportPayload<ExtArgs>[]
     uploadedDocuments: Prisma.$LegalDocumentPayload<ExtArgs>[]
+    lawyerReviews: Prisma.$LawyerReviewPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1952,6 +2125,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   caseMessages<T extends Prisma.User$caseMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$caseMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CaseMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   caseReports<T extends Prisma.User$caseReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$caseReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CaseReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   uploadedDocuments<T extends Prisma.User$uploadedDocumentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$uploadedDocumentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LegalDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  lawyerReviews<T extends Prisma.User$lawyerReviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$lawyerReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LawyerReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2521,6 +2695,30 @@ export type User$uploadedDocumentsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.LegalDocumentScalarFieldEnum | Prisma.LegalDocumentScalarFieldEnum[]
+}
+
+/**
+ * User.lawyerReviews
+ */
+export type User$lawyerReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LawyerReview
+   */
+  select?: Prisma.LawyerReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LawyerReview
+   */
+  omit?: Prisma.LawyerReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LawyerReviewInclude<ExtArgs> | null
+  where?: Prisma.LawyerReviewWhereInput
+  orderBy?: Prisma.LawyerReviewOrderByWithRelationInput | Prisma.LawyerReviewOrderByWithRelationInput[]
+  cursor?: Prisma.LawyerReviewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LawyerReviewScalarFieldEnum | Prisma.LawyerReviewScalarFieldEnum[]
 }
 
 /**

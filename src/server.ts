@@ -8,6 +8,7 @@ import {
 	seedSuperAdmin,
 	seedTesterAdmin,
 	seedTesterLawyer,
+	seedTesterClient,
 } from "./app/utils/seed";
 
 const PORT = config.port;
@@ -26,6 +27,7 @@ const main = async () => {
 		await seedSuperAdmin();
 		await seedTesterAdmin();
 		await seedTesterLawyer();
+		await seedTesterClient();
 
 		await deleteUnverifiedLawyers();
 

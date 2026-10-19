@@ -12,6 +12,8 @@ model Lawyer {
   bio             String?
   consultationFee Decimal? @db.Decimal(10, 2)
   contactNumber   String?
+  averageRating   Decimal  @default(4.0) @map("average_rating") @db.Decimal(3, 2)
+  ratingCount     Int      @default(1) @map("rating_count")
 
   // Lawyer verification
   verificationStatus LawyerVerificationStatus @default(PENDING)
@@ -36,13 +38,14 @@ model Lawyer {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   // Relations
-  schedules       Schedule[]
-  appointments    Appointment[]
-  cases           Case[]
-  notes           LawyerNote[]
-  documents       LegalDocument[]
-  invoices        Invoice[]
-  specializations LawyerSpecialization[]
+  schedules              Schedule[]
+  appointments           Appointment[]
+  cases                  Case[]
+  notes                  LawyerNote[]
+  documents              LegalDocument[]
+  invoices               Invoice[]
+  reviews                LawyerReview[]
+  specializations        LawyerSpecialization[]
   specializationRequests LawyerSpecializationRequest[]
 
   @@index([email], name: "idx_lawyer_email")

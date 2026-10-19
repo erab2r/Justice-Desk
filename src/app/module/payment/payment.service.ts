@@ -41,7 +41,7 @@ const getMyPayments = async (query : IQuery, user : RequestUser) => {
         include: {
             appointment: {
                 include: {
-                    lawyer: { select: { id: true, name: true, specialization: true } },
+                    lawyer: { select: { id: true, name: true } },
                     schedule: true,
                 },
             },
@@ -151,7 +151,7 @@ const getSinglePayment = async (paymentId: string, user: RequestUser) => {
                     client: {
                         select: { id: true, name: true, email: true, userId: true },
                     },
-                    lawyer: { select: { id: true, name: true, specialization: true } },
+                    lawyer: { select: { id: true, name: true} },
                     schedule: true,
                 },
             },

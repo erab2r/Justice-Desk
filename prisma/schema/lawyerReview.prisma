@@ -1,0 +1,17 @@
+model LawyerReview {
+  id String @id @default(uuid())
+
+  rating        Int
+  reviewComment String   @map("review_comment")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  lawyerId String @map("lawyer_id")
+  lawyer   Lawyer @relation(fields: [lawyerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@unique([userId, lawyerId], name: "unique_lawyer_review_user_lawyer")
+  @@index([lawyerId, createdAt], name: "idx_lawyer_review_lawyer_created_at")
+  @@map("lawyer_reviews")
+}

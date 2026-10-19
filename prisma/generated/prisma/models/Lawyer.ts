@@ -29,11 +29,15 @@ export type AggregateLawyer = {
 export type LawyerAvgAggregateOutputType = {
   experienceYears: number | null
   consultationFee: runtime.Decimal | null
+  averageRating: runtime.Decimal | null
+  ratingCount: number | null
 }
 
 export type LawyerSumAggregateOutputType = {
   experienceYears: number | null
   consultationFee: runtime.Decimal | null
+  averageRating: runtime.Decimal | null
+  ratingCount: number | null
 }
 
 export type LawyerMinAggregateOutputType = {
@@ -47,6 +51,8 @@ export type LawyerMinAggregateOutputType = {
   bio: string | null
   consultationFee: runtime.Decimal | null
   contactNumber: string | null
+  averageRating: runtime.Decimal | null
+  ratingCount: number | null
   verificationStatus: $Enums.LawyerVerificationStatus | null
   rejectionReason: string | null
   reviewedBy: string | null
@@ -71,6 +77,8 @@ export type LawyerMaxAggregateOutputType = {
   bio: string | null
   consultationFee: runtime.Decimal | null
   contactNumber: string | null
+  averageRating: runtime.Decimal | null
+  ratingCount: number | null
   verificationStatus: $Enums.LawyerVerificationStatus | null
   rejectionReason: string | null
   reviewedBy: string | null
@@ -95,6 +103,8 @@ export type LawyerCountAggregateOutputType = {
   bio: number
   consultationFee: number
   contactNumber: number
+  averageRating: number
+  ratingCount: number
   verificationStatus: number
   rejectionReason: number
   reviewedBy: number
@@ -114,11 +124,15 @@ export type LawyerCountAggregateOutputType = {
 export type LawyerAvgAggregateInputType = {
   experienceYears?: true
   consultationFee?: true
+  averageRating?: true
+  ratingCount?: true
 }
 
 export type LawyerSumAggregateInputType = {
   experienceYears?: true
   consultationFee?: true
+  averageRating?: true
+  ratingCount?: true
 }
 
 export type LawyerMinAggregateInputType = {
@@ -132,6 +146,8 @@ export type LawyerMinAggregateInputType = {
   bio?: true
   consultationFee?: true
   contactNumber?: true
+  averageRating?: true
+  ratingCount?: true
   verificationStatus?: true
   rejectionReason?: true
   reviewedBy?: true
@@ -156,6 +172,8 @@ export type LawyerMaxAggregateInputType = {
   bio?: true
   consultationFee?: true
   contactNumber?: true
+  averageRating?: true
+  ratingCount?: true
   verificationStatus?: true
   rejectionReason?: true
   reviewedBy?: true
@@ -180,6 +198,8 @@ export type LawyerCountAggregateInputType = {
   bio?: true
   consultationFee?: true
   contactNumber?: true
+  averageRating?: true
+  ratingCount?: true
   verificationStatus?: true
   rejectionReason?: true
   reviewedBy?: true
@@ -292,6 +312,8 @@ export type LawyerGroupByOutputType = {
   bio: string | null
   consultationFee: runtime.Decimal | null
   contactNumber: string | null
+  averageRating: runtime.Decimal
+  ratingCount: number
   verificationStatus: $Enums.LawyerVerificationStatus
   rejectionReason: string | null
   reviewedBy: string | null
@@ -340,6 +362,8 @@ export type LawyerWhereInput = {
   bio?: Prisma.StringNullableFilter<"Lawyer"> | string | null
   consultationFee?: Prisma.DecimalNullableFilter<"Lawyer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.StringNullableFilter<"Lawyer"> | string | null
+  averageRating?: Prisma.DecimalFilter<"Lawyer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFilter<"Lawyer"> | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFilter<"Lawyer"> | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.StringNullableFilter<"Lawyer"> | string | null
   reviewedBy?: Prisma.StringNullableFilter<"Lawyer"> | string | null
@@ -359,6 +383,7 @@ export type LawyerWhereInput = {
   notes?: Prisma.LawyerNoteListRelationFilter
   documents?: Prisma.LegalDocumentListRelationFilter
   invoices?: Prisma.InvoiceListRelationFilter
+  reviews?: Prisma.LawyerReviewListRelationFilter
   specializations?: Prisma.LawyerSpecializationListRelationFilter
   specializationRequests?: Prisma.LawyerSpecializationRequestListRelationFilter
 }
@@ -374,6 +399,8 @@ export type LawyerOrderByWithRelationInput = {
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
   consultationFee?: Prisma.SortOrderInput | Prisma.SortOrder
   contactNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewedBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -393,6 +420,7 @@ export type LawyerOrderByWithRelationInput = {
   notes?: Prisma.LawyerNoteOrderByRelationAggregateInput
   documents?: Prisma.LegalDocumentOrderByRelationAggregateInput
   invoices?: Prisma.InvoiceOrderByRelationAggregateInput
+  reviews?: Prisma.LawyerReviewOrderByRelationAggregateInput
   specializations?: Prisma.LawyerSpecializationOrderByRelationAggregateInput
   specializationRequests?: Prisma.LawyerSpecializationRequestOrderByRelationAggregateInput
 }
@@ -412,6 +440,8 @@ export type LawyerWhereUniqueInput = Prisma.AtLeast<{
   bio?: Prisma.StringNullableFilter<"Lawyer"> | string | null
   consultationFee?: Prisma.DecimalNullableFilter<"Lawyer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.StringNullableFilter<"Lawyer"> | string | null
+  averageRating?: Prisma.DecimalFilter<"Lawyer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFilter<"Lawyer"> | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFilter<"Lawyer"> | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.StringNullableFilter<"Lawyer"> | string | null
   reviewedBy?: Prisma.StringNullableFilter<"Lawyer"> | string | null
@@ -430,6 +460,7 @@ export type LawyerWhereUniqueInput = Prisma.AtLeast<{
   notes?: Prisma.LawyerNoteListRelationFilter
   documents?: Prisma.LegalDocumentListRelationFilter
   invoices?: Prisma.InvoiceListRelationFilter
+  reviews?: Prisma.LawyerReviewListRelationFilter
   specializations?: Prisma.LawyerSpecializationListRelationFilter
   specializationRequests?: Prisma.LawyerSpecializationRequestListRelationFilter
 }, "id" | "email" | "licenseNumber" | "userId">
@@ -445,6 +476,8 @@ export type LawyerOrderByWithAggregationInput = {
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
   consultationFee?: Prisma.SortOrderInput | Prisma.SortOrder
   contactNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewedBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -478,6 +511,8 @@ export type LawyerScalarWhereWithAggregatesInput = {
   bio?: Prisma.StringNullableWithAggregatesFilter<"Lawyer"> | string | null
   consultationFee?: Prisma.DecimalNullableWithAggregatesFilter<"Lawyer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.StringNullableWithAggregatesFilter<"Lawyer"> | string | null
+  averageRating?: Prisma.DecimalWithAggregatesFilter<"Lawyer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntWithAggregatesFilter<"Lawyer"> | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusWithAggregatesFilter<"Lawyer"> | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.StringNullableWithAggregatesFilter<"Lawyer"> | string | null
   reviewedBy?: Prisma.StringNullableWithAggregatesFilter<"Lawyer"> | string | null
@@ -503,6 +538,8 @@ export type LawyerCreateInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -521,6 +558,7 @@ export type LawyerCreateInput = {
   notes?: Prisma.LawyerNoteCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestCreateNestedManyWithoutLawyerInput
 }
@@ -536,6 +574,8 @@ export type LawyerUncheckedCreateInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -554,6 +594,7 @@ export type LawyerUncheckedCreateInput = {
   notes?: Prisma.LawyerNoteUncheckedCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationUncheckedCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedCreateNestedManyWithoutLawyerInput
 }
@@ -569,6 +610,8 @@ export type LawyerUpdateInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -587,6 +630,7 @@ export type LawyerUpdateInput = {
   notes?: Prisma.LawyerNoteUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUpdateManyWithoutLawyerNestedInput
 }
@@ -602,6 +646,8 @@ export type LawyerUncheckedUpdateInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -620,6 +666,7 @@ export type LawyerUncheckedUpdateInput = {
   notes?: Prisma.LawyerNoteUncheckedUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUncheckedUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUncheckedUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedUpdateManyWithoutLawyerNestedInput
 }
@@ -635,6 +682,8 @@ export type LawyerCreateManyInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -660,6 +709,8 @@ export type LawyerUpdateManyMutationInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -684,6 +735,8 @@ export type LawyerUncheckedUpdateManyInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -714,6 +767,8 @@ export type LawyerCountOrderByAggregateInput = {
   bio?: Prisma.SortOrder
   consultationFee?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrder
   reviewedBy?: Prisma.SortOrder
@@ -731,6 +786,8 @@ export type LawyerCountOrderByAggregateInput = {
 export type LawyerAvgOrderByAggregateInput = {
   experienceYears?: Prisma.SortOrder
   consultationFee?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
 }
 
 export type LawyerMaxOrderByAggregateInput = {
@@ -744,6 +801,8 @@ export type LawyerMaxOrderByAggregateInput = {
   bio?: Prisma.SortOrder
   consultationFee?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrder
   reviewedBy?: Prisma.SortOrder
@@ -768,6 +827,8 @@ export type LawyerMinOrderByAggregateInput = {
   bio?: Prisma.SortOrder
   consultationFee?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
   rejectionReason?: Prisma.SortOrder
   reviewedBy?: Prisma.SortOrder
@@ -784,6 +845,8 @@ export type LawyerMinOrderByAggregateInput = {
 export type LawyerSumOrderByAggregateInput = {
   experienceYears?: Prisma.SortOrder
   consultationFee?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
 }
 
 export type LawyerNullableScalarRelationFilter = {
@@ -865,6 +928,20 @@ export type LawyerUpdateOneRequiredWithoutNotesNestedInput = {
   upsert?: Prisma.LawyerUpsertWithoutNotesInput
   connect?: Prisma.LawyerWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.LawyerUpdateToOneWithWhereWithoutNotesInput, Prisma.LawyerUpdateWithoutNotesInput>, Prisma.LawyerUncheckedUpdateWithoutNotesInput>
+}
+
+export type LawyerCreateNestedOneWithoutReviewsInput = {
+  create?: Prisma.XOR<Prisma.LawyerCreateWithoutReviewsInput, Prisma.LawyerUncheckedCreateWithoutReviewsInput>
+  connectOrCreate?: Prisma.LawyerCreateOrConnectWithoutReviewsInput
+  connect?: Prisma.LawyerWhereUniqueInput
+}
+
+export type LawyerUpdateOneRequiredWithoutReviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.LawyerCreateWithoutReviewsInput, Prisma.LawyerUncheckedCreateWithoutReviewsInput>
+  connectOrCreate?: Prisma.LawyerCreateOrConnectWithoutReviewsInput
+  upsert?: Prisma.LawyerUpsertWithoutReviewsInput
+  connect?: Prisma.LawyerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LawyerUpdateToOneWithWhereWithoutReviewsInput, Prisma.LawyerUpdateWithoutReviewsInput>, Prisma.LawyerUncheckedUpdateWithoutReviewsInput>
 }
 
 export type LawyerCreateNestedOneWithoutDocumentsInput = {
@@ -968,6 +1045,8 @@ export type LawyerCreateWithoutAppointmentsInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -985,6 +1064,7 @@ export type LawyerCreateWithoutAppointmentsInput = {
   notes?: Prisma.LawyerNoteCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestCreateNestedManyWithoutLawyerInput
 }
@@ -1000,6 +1080,8 @@ export type LawyerUncheckedCreateWithoutAppointmentsInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -1017,6 +1099,7 @@ export type LawyerUncheckedCreateWithoutAppointmentsInput = {
   notes?: Prisma.LawyerNoteUncheckedCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationUncheckedCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedCreateNestedManyWithoutLawyerInput
 }
@@ -1048,6 +1131,8 @@ export type LawyerUpdateWithoutAppointmentsInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1065,6 +1150,7 @@ export type LawyerUpdateWithoutAppointmentsInput = {
   notes?: Prisma.LawyerNoteUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUpdateManyWithoutLawyerNestedInput
 }
@@ -1080,6 +1166,8 @@ export type LawyerUncheckedUpdateWithoutAppointmentsInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1097,6 +1185,7 @@ export type LawyerUncheckedUpdateWithoutAppointmentsInput = {
   notes?: Prisma.LawyerNoteUncheckedUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUncheckedUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUncheckedUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedUpdateManyWithoutLawyerNestedInput
 }
@@ -1112,6 +1201,8 @@ export type LawyerCreateWithoutCasesInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -1129,6 +1220,7 @@ export type LawyerCreateWithoutCasesInput = {
   notes?: Prisma.LawyerNoteCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestCreateNestedManyWithoutLawyerInput
 }
@@ -1144,6 +1236,8 @@ export type LawyerUncheckedCreateWithoutCasesInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -1161,6 +1255,7 @@ export type LawyerUncheckedCreateWithoutCasesInput = {
   notes?: Prisma.LawyerNoteUncheckedCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationUncheckedCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedCreateNestedManyWithoutLawyerInput
 }
@@ -1192,6 +1287,8 @@ export type LawyerUpdateWithoutCasesInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1209,6 +1306,7 @@ export type LawyerUpdateWithoutCasesInput = {
   notes?: Prisma.LawyerNoteUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUpdateManyWithoutLawyerNestedInput
 }
@@ -1224,6 +1322,8 @@ export type LawyerUncheckedUpdateWithoutCasesInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1241,6 +1341,7 @@ export type LawyerUncheckedUpdateWithoutCasesInput = {
   notes?: Prisma.LawyerNoteUncheckedUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUncheckedUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUncheckedUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedUpdateManyWithoutLawyerNestedInput
 }
@@ -1256,6 +1357,8 @@ export type LawyerCreateWithoutInvoicesInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -1273,6 +1376,7 @@ export type LawyerCreateWithoutInvoicesInput = {
   cases?: Prisma.CaseCreateNestedManyWithoutLawyerInput
   notes?: Prisma.LawyerNoteCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestCreateNestedManyWithoutLawyerInput
 }
@@ -1288,6 +1392,8 @@ export type LawyerUncheckedCreateWithoutInvoicesInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -1305,6 +1411,7 @@ export type LawyerUncheckedCreateWithoutInvoicesInput = {
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutLawyerInput
   notes?: Prisma.LawyerNoteUncheckedCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationUncheckedCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedCreateNestedManyWithoutLawyerInput
 }
@@ -1336,6 +1443,8 @@ export type LawyerUpdateWithoutInvoicesInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1353,6 +1462,7 @@ export type LawyerUpdateWithoutInvoicesInput = {
   cases?: Prisma.CaseUpdateManyWithoutLawyerNestedInput
   notes?: Prisma.LawyerNoteUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUpdateManyWithoutLawyerNestedInput
 }
@@ -1368,6 +1478,8 @@ export type LawyerUncheckedUpdateWithoutInvoicesInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1385,6 +1497,7 @@ export type LawyerUncheckedUpdateWithoutInvoicesInput = {
   cases?: Prisma.CaseUncheckedUpdateManyWithoutLawyerNestedInput
   notes?: Prisma.LawyerNoteUncheckedUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUncheckedUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUncheckedUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedUpdateManyWithoutLawyerNestedInput
 }
@@ -1400,6 +1513,8 @@ export type LawyerCreateWithoutNotesInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -1417,6 +1532,7 @@ export type LawyerCreateWithoutNotesInput = {
   cases?: Prisma.CaseCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestCreateNestedManyWithoutLawyerInput
 }
@@ -1432,6 +1548,8 @@ export type LawyerUncheckedCreateWithoutNotesInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -1449,6 +1567,7 @@ export type LawyerUncheckedCreateWithoutNotesInput = {
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationUncheckedCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedCreateNestedManyWithoutLawyerInput
 }
@@ -1480,6 +1599,8 @@ export type LawyerUpdateWithoutNotesInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1497,6 +1618,7 @@ export type LawyerUpdateWithoutNotesInput = {
   cases?: Prisma.CaseUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUpdateManyWithoutLawyerNestedInput
 }
@@ -1512,6 +1634,8 @@ export type LawyerUncheckedUpdateWithoutNotesInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1529,6 +1653,163 @@ export type LawyerUncheckedUpdateWithoutNotesInput = {
   cases?: Prisma.CaseUncheckedUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUncheckedUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutLawyerNestedInput
+  specializations?: Prisma.LawyerSpecializationUncheckedUpdateManyWithoutLawyerNestedInput
+  specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedUpdateManyWithoutLawyerNestedInput
+}
+
+export type LawyerCreateWithoutReviewsInput = {
+  id?: string
+  name: string
+  email: string
+  address?: string | null
+  licenseNumber: string
+  qualifications: string
+  experienceYears: number
+  bio?: string | null
+  consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  verificationStatus?: $Enums.LawyerVerificationStatus
+  rejectionReason?: string | null
+  reviewedBy?: string | null
+  reviewedAt?: Date | string | null
+  resume?: string | null
+  resumePublicId?: string | null
+  additionalFiles?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutLawyerInput
+  schedules?: Prisma.ScheduleCreateNestedManyWithoutLawyerInput
+  appointments?: Prisma.AppointmentCreateNestedManyWithoutLawyerInput
+  cases?: Prisma.CaseCreateNestedManyWithoutLawyerInput
+  notes?: Prisma.LawyerNoteCreateNestedManyWithoutLawyerInput
+  documents?: Prisma.LegalDocumentCreateNestedManyWithoutLawyerInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutLawyerInput
+  specializations?: Prisma.LawyerSpecializationCreateNestedManyWithoutLawyerInput
+  specializationRequests?: Prisma.LawyerSpecializationRequestCreateNestedManyWithoutLawyerInput
+}
+
+export type LawyerUncheckedCreateWithoutReviewsInput = {
+  id?: string
+  name: string
+  email: string
+  address?: string | null
+  licenseNumber: string
+  qualifications: string
+  experienceYears: number
+  bio?: string | null
+  consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  verificationStatus?: $Enums.LawyerVerificationStatus
+  rejectionReason?: string | null
+  reviewedBy?: string | null
+  reviewedAt?: Date | string | null
+  resume?: string | null
+  resumePublicId?: string | null
+  additionalFiles?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userId: string
+  schedules?: Prisma.ScheduleUncheckedCreateNestedManyWithoutLawyerInput
+  appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutLawyerInput
+  cases?: Prisma.CaseUncheckedCreateNestedManyWithoutLawyerInput
+  notes?: Prisma.LawyerNoteUncheckedCreateNestedManyWithoutLawyerInput
+  documents?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutLawyerInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutLawyerInput
+  specializations?: Prisma.LawyerSpecializationUncheckedCreateNestedManyWithoutLawyerInput
+  specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedCreateNestedManyWithoutLawyerInput
+}
+
+export type LawyerCreateOrConnectWithoutReviewsInput = {
+  where: Prisma.LawyerWhereUniqueInput
+  create: Prisma.XOR<Prisma.LawyerCreateWithoutReviewsInput, Prisma.LawyerUncheckedCreateWithoutReviewsInput>
+}
+
+export type LawyerUpsertWithoutReviewsInput = {
+  update: Prisma.XOR<Prisma.LawyerUpdateWithoutReviewsInput, Prisma.LawyerUncheckedUpdateWithoutReviewsInput>
+  create: Prisma.XOR<Prisma.LawyerCreateWithoutReviewsInput, Prisma.LawyerUncheckedCreateWithoutReviewsInput>
+  where?: Prisma.LawyerWhereInput
+}
+
+export type LawyerUpdateToOneWithWhereWithoutReviewsInput = {
+  where?: Prisma.LawyerWhereInput
+  data: Prisma.XOR<Prisma.LawyerUpdateWithoutReviewsInput, Prisma.LawyerUncheckedUpdateWithoutReviewsInput>
+}
+
+export type LawyerUpdateWithoutReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  qualifications?: Prisma.StringFieldUpdateOperationsInput | string
+  experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resume?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalFiles?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutLawyerNestedInput
+  schedules?: Prisma.ScheduleUpdateManyWithoutLawyerNestedInput
+  appointments?: Prisma.AppointmentUpdateManyWithoutLawyerNestedInput
+  cases?: Prisma.CaseUpdateManyWithoutLawyerNestedInput
+  notes?: Prisma.LawyerNoteUpdateManyWithoutLawyerNestedInput
+  documents?: Prisma.LegalDocumentUpdateManyWithoutLawyerNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutLawyerNestedInput
+  specializations?: Prisma.LawyerSpecializationUpdateManyWithoutLawyerNestedInput
+  specializationRequests?: Prisma.LawyerSpecializationRequestUpdateManyWithoutLawyerNestedInput
+}
+
+export type LawyerUncheckedUpdateWithoutReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  qualifications?: Prisma.StringFieldUpdateOperationsInput | string
+  experienceYears?: Prisma.IntFieldUpdateOperationsInput | number
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resume?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalFiles?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  schedules?: Prisma.ScheduleUncheckedUpdateManyWithoutLawyerNestedInput
+  appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutLawyerNestedInput
+  cases?: Prisma.CaseUncheckedUpdateManyWithoutLawyerNestedInput
+  notes?: Prisma.LawyerNoteUncheckedUpdateManyWithoutLawyerNestedInput
+  documents?: Prisma.LegalDocumentUncheckedUpdateManyWithoutLawyerNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUncheckedUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedUpdateManyWithoutLawyerNestedInput
 }
@@ -1544,6 +1825,8 @@ export type LawyerCreateWithoutDocumentsInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -1561,6 +1844,7 @@ export type LawyerCreateWithoutDocumentsInput = {
   cases?: Prisma.CaseCreateNestedManyWithoutLawyerInput
   notes?: Prisma.LawyerNoteCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestCreateNestedManyWithoutLawyerInput
 }
@@ -1576,6 +1860,8 @@ export type LawyerUncheckedCreateWithoutDocumentsInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -1593,6 +1879,7 @@ export type LawyerUncheckedCreateWithoutDocumentsInput = {
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutLawyerInput
   notes?: Prisma.LawyerNoteUncheckedCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationUncheckedCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedCreateNestedManyWithoutLawyerInput
 }
@@ -1624,6 +1911,8 @@ export type LawyerUpdateWithoutDocumentsInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1641,6 +1930,7 @@ export type LawyerUpdateWithoutDocumentsInput = {
   cases?: Prisma.CaseUpdateManyWithoutLawyerNestedInput
   notes?: Prisma.LawyerNoteUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUpdateManyWithoutLawyerNestedInput
 }
@@ -1656,6 +1946,8 @@ export type LawyerUncheckedUpdateWithoutDocumentsInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1673,6 +1965,7 @@ export type LawyerUncheckedUpdateWithoutDocumentsInput = {
   cases?: Prisma.CaseUncheckedUpdateManyWithoutLawyerNestedInput
   notes?: Prisma.LawyerNoteUncheckedUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUncheckedUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedUpdateManyWithoutLawyerNestedInput
 }
@@ -1688,6 +1981,8 @@ export type LawyerCreateWithoutSchedulesInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -1705,6 +2000,7 @@ export type LawyerCreateWithoutSchedulesInput = {
   notes?: Prisma.LawyerNoteCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestCreateNestedManyWithoutLawyerInput
 }
@@ -1720,6 +2016,8 @@ export type LawyerUncheckedCreateWithoutSchedulesInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -1737,6 +2035,7 @@ export type LawyerUncheckedCreateWithoutSchedulesInput = {
   notes?: Prisma.LawyerNoteUncheckedCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationUncheckedCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedCreateNestedManyWithoutLawyerInput
 }
@@ -1768,6 +2067,8 @@ export type LawyerUpdateWithoutSchedulesInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1785,6 +2086,7 @@ export type LawyerUpdateWithoutSchedulesInput = {
   notes?: Prisma.LawyerNoteUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUpdateManyWithoutLawyerNestedInput
 }
@@ -1800,6 +2102,8 @@ export type LawyerUncheckedUpdateWithoutSchedulesInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1817,6 +2121,7 @@ export type LawyerUncheckedUpdateWithoutSchedulesInput = {
   notes?: Prisma.LawyerNoteUncheckedUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUncheckedUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUncheckedUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedUpdateManyWithoutLawyerNestedInput
 }
@@ -1832,6 +2137,8 @@ export type LawyerCreateWithoutSpecializationsInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -1850,6 +2157,7 @@ export type LawyerCreateWithoutSpecializationsInput = {
   notes?: Prisma.LawyerNoteCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestCreateNestedManyWithoutLawyerInput
 }
 
@@ -1864,6 +2172,8 @@ export type LawyerUncheckedCreateWithoutSpecializationsInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -1882,6 +2192,7 @@ export type LawyerUncheckedCreateWithoutSpecializationsInput = {
   notes?: Prisma.LawyerNoteUncheckedCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedCreateNestedManyWithoutLawyerInput
 }
 
@@ -1912,6 +2223,8 @@ export type LawyerUpdateWithoutSpecializationsInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1930,6 +2243,7 @@ export type LawyerUpdateWithoutSpecializationsInput = {
   notes?: Prisma.LawyerNoteUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUpdateManyWithoutLawyerNestedInput
 }
 
@@ -1944,6 +2258,8 @@ export type LawyerUncheckedUpdateWithoutSpecializationsInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1962,6 +2278,7 @@ export type LawyerUncheckedUpdateWithoutSpecializationsInput = {
   notes?: Prisma.LawyerNoteUncheckedUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUncheckedUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedUpdateManyWithoutLawyerNestedInput
 }
 
@@ -1976,6 +2293,8 @@ export type LawyerCreateWithoutSpecializationRequestsInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -1994,6 +2313,7 @@ export type LawyerCreateWithoutSpecializationRequestsInput = {
   notes?: Prisma.LawyerNoteCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationCreateNestedManyWithoutLawyerInput
 }
 
@@ -2008,6 +2328,8 @@ export type LawyerUncheckedCreateWithoutSpecializationRequestsInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -2026,6 +2348,7 @@ export type LawyerUncheckedCreateWithoutSpecializationRequestsInput = {
   notes?: Prisma.LawyerNoteUncheckedCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationUncheckedCreateNestedManyWithoutLawyerInput
 }
 
@@ -2056,6 +2379,8 @@ export type LawyerUpdateWithoutSpecializationRequestsInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2074,6 +2399,7 @@ export type LawyerUpdateWithoutSpecializationRequestsInput = {
   notes?: Prisma.LawyerNoteUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUpdateManyWithoutLawyerNestedInput
 }
 
@@ -2088,6 +2414,8 @@ export type LawyerUncheckedUpdateWithoutSpecializationRequestsInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2106,6 +2434,7 @@ export type LawyerUncheckedUpdateWithoutSpecializationRequestsInput = {
   notes?: Prisma.LawyerNoteUncheckedUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUncheckedUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUncheckedUpdateManyWithoutLawyerNestedInput
 }
 
@@ -2120,6 +2449,8 @@ export type LawyerCreateWithoutUserInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -2137,6 +2468,7 @@ export type LawyerCreateWithoutUserInput = {
   notes?: Prisma.LawyerNoteCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestCreateNestedManyWithoutLawyerInput
 }
@@ -2152,6 +2484,8 @@ export type LawyerUncheckedCreateWithoutUserInput = {
   bio?: string | null
   consultationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: string | null
+  averageRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   verificationStatus?: $Enums.LawyerVerificationStatus
   rejectionReason?: string | null
   reviewedBy?: string | null
@@ -2169,6 +2503,7 @@ export type LawyerUncheckedCreateWithoutUserInput = {
   notes?: Prisma.LawyerNoteUncheckedCreateNestedManyWithoutLawyerInput
   documents?: Prisma.LegalDocumentUncheckedCreateNestedManyWithoutLawyerInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutLawyerInput
+  reviews?: Prisma.LawyerReviewUncheckedCreateNestedManyWithoutLawyerInput
   specializations?: Prisma.LawyerSpecializationUncheckedCreateNestedManyWithoutLawyerInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedCreateNestedManyWithoutLawyerInput
 }
@@ -2200,6 +2535,8 @@ export type LawyerUpdateWithoutUserInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2217,6 +2554,7 @@ export type LawyerUpdateWithoutUserInput = {
   notes?: Prisma.LawyerNoteUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUpdateManyWithoutLawyerNestedInput
 }
@@ -2232,6 +2570,8 @@ export type LawyerUncheckedUpdateWithoutUserInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consultationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averageRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   verificationStatus?: Prisma.EnumLawyerVerificationStatusFieldUpdateOperationsInput | $Enums.LawyerVerificationStatus
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2249,6 +2589,7 @@ export type LawyerUncheckedUpdateWithoutUserInput = {
   notes?: Prisma.LawyerNoteUncheckedUpdateManyWithoutLawyerNestedInput
   documents?: Prisma.LegalDocumentUncheckedUpdateManyWithoutLawyerNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutLawyerNestedInput
+  reviews?: Prisma.LawyerReviewUncheckedUpdateManyWithoutLawyerNestedInput
   specializations?: Prisma.LawyerSpecializationUncheckedUpdateManyWithoutLawyerNestedInput
   specializationRequests?: Prisma.LawyerSpecializationRequestUncheckedUpdateManyWithoutLawyerNestedInput
 }
@@ -2265,6 +2606,7 @@ export type LawyerCountOutputType = {
   notes: number
   documents: number
   invoices: number
+  reviews: number
   specializations: number
   specializationRequests: number
 }
@@ -2276,6 +2618,7 @@ export type LawyerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   notes?: boolean | LawyerCountOutputTypeCountNotesArgs
   documents?: boolean | LawyerCountOutputTypeCountDocumentsArgs
   invoices?: boolean | LawyerCountOutputTypeCountInvoicesArgs
+  reviews?: boolean | LawyerCountOutputTypeCountReviewsArgs
   specializations?: boolean | LawyerCountOutputTypeCountSpecializationsArgs
   specializationRequests?: boolean | LawyerCountOutputTypeCountSpecializationRequestsArgs
 }
@@ -2335,6 +2678,13 @@ export type LawyerCountOutputTypeCountInvoicesArgs<ExtArgs extends runtime.Types
 /**
  * LawyerCountOutputType without action
  */
+export type LawyerCountOutputTypeCountReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LawyerReviewWhereInput
+}
+
+/**
+ * LawyerCountOutputType without action
+ */
 export type LawyerCountOutputTypeCountSpecializationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LawyerSpecializationWhereInput
 }
@@ -2358,6 +2708,8 @@ export type LawyerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   bio?: boolean
   consultationFee?: boolean
   contactNumber?: boolean
+  averageRating?: boolean
+  ratingCount?: boolean
   verificationStatus?: boolean
   rejectionReason?: boolean
   reviewedBy?: boolean
@@ -2377,6 +2729,7 @@ export type LawyerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   notes?: boolean | Prisma.Lawyer$notesArgs<ExtArgs>
   documents?: boolean | Prisma.Lawyer$documentsArgs<ExtArgs>
   invoices?: boolean | Prisma.Lawyer$invoicesArgs<ExtArgs>
+  reviews?: boolean | Prisma.Lawyer$reviewsArgs<ExtArgs>
   specializations?: boolean | Prisma.Lawyer$specializationsArgs<ExtArgs>
   specializationRequests?: boolean | Prisma.Lawyer$specializationRequestsArgs<ExtArgs>
   _count?: boolean | Prisma.LawyerCountOutputTypeDefaultArgs<ExtArgs>
@@ -2393,6 +2746,8 @@ export type LawyerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   bio?: boolean
   consultationFee?: boolean
   contactNumber?: boolean
+  averageRating?: boolean
+  ratingCount?: boolean
   verificationStatus?: boolean
   rejectionReason?: boolean
   reviewedBy?: boolean
@@ -2419,6 +2774,8 @@ export type LawyerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   bio?: boolean
   consultationFee?: boolean
   contactNumber?: boolean
+  averageRating?: boolean
+  ratingCount?: boolean
   verificationStatus?: boolean
   rejectionReason?: boolean
   reviewedBy?: boolean
@@ -2445,6 +2802,8 @@ export type LawyerSelectScalar = {
   bio?: boolean
   consultationFee?: boolean
   contactNumber?: boolean
+  averageRating?: boolean
+  ratingCount?: boolean
   verificationStatus?: boolean
   rejectionReason?: boolean
   reviewedBy?: boolean
@@ -2459,7 +2818,7 @@ export type LawyerSelectScalar = {
   userId?: boolean
 }
 
-export type LawyerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "address" | "licenseNumber" | "qualifications" | "experienceYears" | "bio" | "consultationFee" | "contactNumber" | "verificationStatus" | "rejectionReason" | "reviewedBy" | "reviewedAt" | "resume" | "resumePublicId" | "additionalFiles" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["lawyer"]>
+export type LawyerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "address" | "licenseNumber" | "qualifications" | "experienceYears" | "bio" | "consultationFee" | "contactNumber" | "averageRating" | "ratingCount" | "verificationStatus" | "rejectionReason" | "reviewedBy" | "reviewedAt" | "resume" | "resumePublicId" | "additionalFiles" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["lawyer"]>
 export type LawyerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   schedules?: boolean | Prisma.Lawyer$schedulesArgs<ExtArgs>
@@ -2468,6 +2827,7 @@ export type LawyerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   notes?: boolean | Prisma.Lawyer$notesArgs<ExtArgs>
   documents?: boolean | Prisma.Lawyer$documentsArgs<ExtArgs>
   invoices?: boolean | Prisma.Lawyer$invoicesArgs<ExtArgs>
+  reviews?: boolean | Prisma.Lawyer$reviewsArgs<ExtArgs>
   specializations?: boolean | Prisma.Lawyer$specializationsArgs<ExtArgs>
   specializationRequests?: boolean | Prisma.Lawyer$specializationRequestsArgs<ExtArgs>
   _count?: boolean | Prisma.LawyerCountOutputTypeDefaultArgs<ExtArgs>
@@ -2489,6 +2849,7 @@ export type $LawyerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     notes: Prisma.$LawyerNotePayload<ExtArgs>[]
     documents: Prisma.$LegalDocumentPayload<ExtArgs>[]
     invoices: Prisma.$InvoicePayload<ExtArgs>[]
+    reviews: Prisma.$LawyerReviewPayload<ExtArgs>[]
     specializations: Prisma.$LawyerSpecializationPayload<ExtArgs>[]
     specializationRequests: Prisma.$LawyerSpecializationRequestPayload<ExtArgs>[]
   }
@@ -2503,6 +2864,8 @@ export type $LawyerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     bio: string | null
     consultationFee: runtime.Decimal | null
     contactNumber: string | null
+    averageRating: runtime.Decimal
+    ratingCount: number
     verificationStatus: $Enums.LawyerVerificationStatus
     rejectionReason: string | null
     reviewedBy: string | null
@@ -2916,6 +3279,7 @@ export interface Prisma__LawyerClient<T, Null = never, ExtArgs extends runtime.T
   notes<T extends Prisma.Lawyer$notesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lawyer$notesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LawyerNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   documents<T extends Prisma.Lawyer$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lawyer$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LegalDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   invoices<T extends Prisma.Lawyer$invoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lawyer$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviews<T extends Prisma.Lawyer$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lawyer$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LawyerReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   specializations<T extends Prisma.Lawyer$specializationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lawyer$specializationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LawyerSpecializationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   specializationRequests<T extends Prisma.Lawyer$specializationRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lawyer$specializationRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LawyerSpecializationRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -2957,6 +3321,8 @@ export interface LawyerFieldRefs {
   readonly bio: Prisma.FieldRef<"Lawyer", 'String'>
   readonly consultationFee: Prisma.FieldRef<"Lawyer", 'Decimal'>
   readonly contactNumber: Prisma.FieldRef<"Lawyer", 'String'>
+  readonly averageRating: Prisma.FieldRef<"Lawyer", 'Decimal'>
+  readonly ratingCount: Prisma.FieldRef<"Lawyer", 'Int'>
   readonly verificationStatus: Prisma.FieldRef<"Lawyer", 'LawyerVerificationStatus'>
   readonly rejectionReason: Prisma.FieldRef<"Lawyer", 'String'>
   readonly reviewedBy: Prisma.FieldRef<"Lawyer", 'String'>
@@ -3511,6 +3877,30 @@ export type Lawyer$invoicesArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.InvoiceScalarFieldEnum | Prisma.InvoiceScalarFieldEnum[]
+}
+
+/**
+ * Lawyer.reviews
+ */
+export type Lawyer$reviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LawyerReview
+   */
+  select?: Prisma.LawyerReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LawyerReview
+   */
+  omit?: Prisma.LawyerReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LawyerReviewInclude<ExtArgs> | null
+  where?: Prisma.LawyerReviewWhereInput
+  orderBy?: Prisma.LawyerReviewOrderByWithRelationInput | Prisma.LawyerReviewOrderByWithRelationInput[]
+  cursor?: Prisma.LawyerReviewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LawyerReviewScalarFieldEnum | Prisma.LawyerReviewScalarFieldEnum[]
 }
 
 /**

@@ -47,4 +47,11 @@ export interface IUpdateLawyerStatusPayload {
 	status: Extract<UserStatus, "ACTIVE" | "BLOCKED">;
 }
 
+export interface ISubmitLawyerReviewPayload {
+	rating: number;
+	review_comment: string;
+	user_id: string;
+	lawyer_id: string;
+}
+
 export type LawyerDocumentType = "resume" | "additionalFile";

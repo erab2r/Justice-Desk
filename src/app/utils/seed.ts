@@ -4,7 +4,10 @@ import httpStatus from "http-status";
 import config from "../config";
 import { prisma } from "../lib/prisma";
 import { AppError } from "./AppError";
-import { LawyerVerificationStatus, Role } from "../../../prisma/generated/prisma/enums";
+import {
+	LawyerVerificationStatus,
+	Role,
+} from "../../../prisma/generated/prisma/enums";
 
 export const seedSuperAdmin = async () => {
 	try {
@@ -108,69 +111,6 @@ export const seedTesterAdmin = async () => {
 	}
 };
 
-// export const seedTesterLawyer = async () => {
-// 	try {
-// 		const isTesterLawyerExist = await prisma.user.findUnique({
-// 			where: {
-// 				email: config.tester_lawyer_email,
-// 			},
-// 		});
-
-// 		if (isTesterLawyerExist) {
-// 			console.log("Tester Lawyer Already Exists!");
-// 			return;
-// 		}
-
-// 		const name = config.tester_lawyer_name;
-// 		const email = config.tester_lawyer_email;
-// 		const password = config.tester_lawyer_password;
-
-// 		if (!name || !email || !password) {
-// 			throw new AppError(
-// 				httpStatus.INTERNAL_SERVER_ERROR,
-// 				"Tester Lawyer Name , Email, Password Missing In Env File!!!",
-// 			);
-// 		}
-
-// 		const hashedPassword = await bcrypt.hash(
-// 			password,
-// 			Number(config.bcrypt_salt_rounds),
-// 		);
-
-// 		const testerLawyer = await prisma.user.create({
-// 			data: {
-// 				name,
-// 				email,
-// 				password: hashedPassword,
-// 				role: Role.LAWYER,
-// 				needPasswordChange: false,
-// 				emailVerified: true,
-// 				lawyer: {
-// 					create: {
-// 						email,
-// 						name,
-// 						experienceYears: 5,
-// 						licenseNumber: "BAR0000",
-// 						qualifications: "LLB",
-// 						specialization: "Corporate Law",
-// 						verificationStatus: LawyerVerificationStatus.APPROVED,
-// 					},
-// 				},
-// 			},
-// 		});
-
-// 		console.log("Tester Lawyer Created : ", testerLawyer);
-// 	} catch (error) {
-// 		console.log("Error Seeding Tester Lawyer : ", error);
-
-// 		await prisma.user.delete({
-// 			where: {
-// 				email: config.tester_lawyer_email,
-// 			},
-// 		});
-// 	}
-// };
-
 export const seedTesterLawyer = async () => {
 	try {
 		const isTesterLawyerExist = await prisma.user.findUnique({
@@ -226,8 +166,9 @@ export const seedTesterLawyer = async () => {
 						experienceYears: 5,
 						licenseNumber: "BAR0000",
 						qualifications: "LLB",
-						verificationStatus:
-							LawyerVerificationStatus.APPROVED,
+						averageRating: 4.0,
+						ratingCount: 1,
+						verificationStatus: LawyerVerificationStatus.APPROVED,
 						specializations: {
 							create: {
 								specializationId: specialization.id,
@@ -250,4 +191,50 @@ export const seedTesterLawyer = async () => {
 			});
 		}
 	}
+};
+
+export const seedTesterClient = async () => {
+	const name = config.tester_client_name;
+	const email = config.tester_client_email;
+	const password = config.tester_client_password;
+
+	if (!name || !email || !password) {
+		throw new AppError(
+			httpStatus.INTERNAL_SERVER_ERROR,
+			"Tester Client Name, Email, Password Missing In Env File!!!",
+		);
+	}
+
+	const existingTesterClient = await prisma.user.findUnique({
+		where: { email },
+	});
+
+	if (existingTesterClient) {
+		console.log("Tester Client Already Exists!");
+		return;
+	}
+
+	const hashedPassword = await bcrypt.hash(
+		password,
+		Number(config.bcrypt_salt_rounds),
+	);
+
+	await prisma.user.create({
+		data: {
+			name,
+			email,
+			password: hashedPassword,
+			role: Role.CLIENT,
+			needPasswordChange: false,
+			emailVerified: true,
+			client: {
+				create: {
+					name,
+					email,
+				},
+			},
+		},
+	});
+
+	console.log("Tester Client Created:", email);
 };

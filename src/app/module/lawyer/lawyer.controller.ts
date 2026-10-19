@@ -215,6 +215,28 @@ const getSingleLawyerPublicProfile = catchAsync(
 	},
 );
 
+const submitLawyerReview = catchAsync(async (req: Request, res: Response) => {
+	const result = await LawyerServices.submitLawyerReview(req.body, req.user!);
+
+	sendResponse(res, {
+		statusCode: httpStatus.CREATED,
+		success: true,
+		message: "Lawyer Review Submitted Successfully",
+		data: result,
+	});
+});
+
+const getMyLawyerReviews = catchAsync(async (req: Request, res: Response) => {
+	const result = await LawyerServices.getMyLawyerReviews(req.user!);
+
+	sendResponse(res, {
+		statusCode: httpStatus.OK,
+		success: true,
+		message: "My Lawyer Reviews Retrieved Successfully",
+		data: result,
+	});
+});
+
 export const LawyerControllers = {
 	applyAsLawyer,
 	verifyLawyerEmail,
@@ -230,4 +252,6 @@ export const LawyerControllers = {
 	getAvailableLawyerByTodaysSchedule,
 	getAllLawyersListPublic,
 	getSingleLawyerPublicProfile,
+	getMyLawyerReviews,
+	submitLawyerReview,
 };

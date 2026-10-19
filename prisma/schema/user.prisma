@@ -24,17 +24,16 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
- 
   client Client?
   lawyer Lawyer?
 
   caseActivities CaseActivity[]
   caseMessages   CaseMessage[]
 
-
   caseReports CaseReport[]
 
   uploadedDocuments LegalDocument[]
+  lawyerReviews     LawyerReview[]
 
   @@index([email], map: "idx_user_email")
   @@index([role], map: "idx_user_role")

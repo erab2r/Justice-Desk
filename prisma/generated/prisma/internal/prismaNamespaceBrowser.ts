@@ -60,6 +60,7 @@ export const ModelName = {
   Invoice: 'Invoice',
   Lawyer: 'Lawyer',
   LawyerNote: 'LawyerNote',
+  LawyerReview: 'LawyerReview',
   LegalDocument: 'LegalDocument',
   Payment: 'Payment',
   Schedule: 'Schedule',
@@ -222,6 +223,8 @@ export const LawyerScalarFieldEnum = {
   bio: 'bio',
   consultationFee: 'consultationFee',
   contactNumber: 'contactNumber',
+  averageRating: 'averageRating',
+  ratingCount: 'ratingCount',
   verificationStatus: 'verificationStatus',
   rejectionReason: 'rejectionReason',
   reviewedBy: 'reviewedBy',
@@ -251,6 +254,18 @@ export const LawyerNoteScalarFieldEnum = {
 } as const
 
 export type LawyerNoteScalarFieldEnum = (typeof LawyerNoteScalarFieldEnum)[keyof typeof LawyerNoteScalarFieldEnum]
+
+
+export const LawyerReviewScalarFieldEnum = {
+  id: 'id',
+  rating: 'rating',
+  reviewComment: 'reviewComment',
+  createdAt: 'createdAt',
+  userId: 'userId',
+  lawyerId: 'lawyerId'
+} as const
+
+export type LawyerReviewScalarFieldEnum = (typeof LawyerReviewScalarFieldEnum)[keyof typeof LawyerReviewScalarFieldEnum]
 
 
 export const LegalDocumentScalarFieldEnum = {

@@ -19,6 +19,7 @@ import {
 	ApproveLawyerValidationZodSchema,
 	DeleteLawyerDocumentValidationZodSchema,
 	SuspendLawyerValidationZodSchema,
+	SubmitLawyerReviewValidationZodSchema,
 	UpdateLawyerProfileValidationZodSchema,
 	UpdateLawyerStatusValidationZodSchema,
 	VerifyLawyerEmailValidationZodSchema,
@@ -139,6 +140,19 @@ router.delete(
 router.get(
 	"/public/available-today",
 	LawyerControllers.getAvailableLawyerByTodaysSchedule,
+);
+
+router.post(
+	"/reviews",
+	auth(Role.CLIENT),
+	validateRequest(SubmitLawyerReviewValidationZodSchema),
+	LawyerControllers.submitLawyerReview,
+);
+
+router.get(
+	"/reviews/my",
+	auth(Role.CLIENT),
+	LawyerControllers.getMyLawyerReviews,
 );
 
 router.get("/all-lw", LawyerControllers.getAllLawyersListPublic);

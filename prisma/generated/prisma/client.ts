@@ -87,6 +87,11 @@ export type Lawyer = Prisma.LawyerModel
  */
 export type LawyerNote = Prisma.LawyerNoteModel
 /**
+ * Model LawyerReview
+ * 
+ */
+export type LawyerReview = Prisma.LawyerReviewModel
+/**
  * Model LegalDocument
  * 
  */

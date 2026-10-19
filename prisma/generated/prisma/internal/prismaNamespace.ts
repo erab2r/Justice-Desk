@@ -406,6 +406,7 @@ export const ModelName = {
   Invoice: 'Invoice',
   Lawyer: 'Lawyer',
   LawyerNote: 'LawyerNote',
+  LawyerReview: 'LawyerReview',
   LegalDocument: 'LegalDocument',
   Payment: 'Payment',
   Schedule: 'Schedule',
@@ -429,7 +430,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "appointment" | "case" | "caseActivity" | "caseMessage" | "caseReport" | "client" | "invoice" | "lawyer" | "lawyerNote" | "legalDocument" | "payment" | "schedule" | "specialization" | "lawyerSpecialization" | "lawyerSpecializationRequest" | "user" | "videoSession"
+    modelProps: "appointment" | "case" | "caseActivity" | "caseMessage" | "caseReport" | "client" | "invoice" | "lawyer" | "lawyerNote" | "lawyerReview" | "legalDocument" | "payment" | "schedule" | "specialization" | "lawyerSpecialization" | "lawyerSpecializationRequest" | "user" | "videoSession"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1096,6 +1097,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.LawyerNoteCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.LawyerNoteCountAggregateOutputType> | number
+        }
+      }
+    }
+    LawyerReview: {
+      payload: Prisma.$LawyerReviewPayload<ExtArgs>
+      fields: Prisma.LawyerReviewFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LawyerReviewFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerReviewPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LawyerReviewFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerReviewPayload>
+        }
+        findFirst: {
+          args: Prisma.LawyerReviewFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerReviewPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LawyerReviewFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerReviewPayload>
+        }
+        findMany: {
+          args: Prisma.LawyerReviewFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerReviewPayload>[]
+        }
+        create: {
+          args: Prisma.LawyerReviewCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerReviewPayload>
+        }
+        createMany: {
+          args: Prisma.LawyerReviewCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LawyerReviewCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerReviewPayload>[]
+        }
+        delete: {
+          args: Prisma.LawyerReviewDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerReviewPayload>
+        }
+        update: {
+          args: Prisma.LawyerReviewUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerReviewPayload>
+        }
+        deleteMany: {
+          args: Prisma.LawyerReviewDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LawyerReviewUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LawyerReviewUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerReviewPayload>[]
+        }
+        upsert: {
+          args: Prisma.LawyerReviewUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerReviewPayload>
+        }
+        aggregate: {
+          args: Prisma.LawyerReviewAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLawyerReview>
+        }
+        groupBy: {
+          args: Prisma.LawyerReviewGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LawyerReviewGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LawyerReviewCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LawyerReviewCountAggregateOutputType> | number
         }
       }
     }
@@ -1866,6 +1941,8 @@ export const LawyerScalarFieldEnum = {
   bio: 'bio',
   consultationFee: 'consultationFee',
   contactNumber: 'contactNumber',
+  averageRating: 'averageRating',
+  ratingCount: 'ratingCount',
   verificationStatus: 'verificationStatus',
   rejectionReason: 'rejectionReason',
   reviewedBy: 'reviewedBy',
@@ -1895,6 +1972,18 @@ export const LawyerNoteScalarFieldEnum = {
 } as const
 
 export type LawyerNoteScalarFieldEnum = (typeof LawyerNoteScalarFieldEnum)[keyof typeof LawyerNoteScalarFieldEnum]
+
+
+export const LawyerReviewScalarFieldEnum = {
+  id: 'id',
+  rating: 'rating',
+  reviewComment: 'reviewComment',
+  createdAt: 'createdAt',
+  userId: 'userId',
+  lawyerId: 'lawyerId'
+} as const
+
+export type LawyerReviewScalarFieldEnum = (typeof LawyerReviewScalarFieldEnum)[keyof typeof LawyerReviewScalarFieldEnum]
 
 
 export const LegalDocumentScalarFieldEnum = {
@@ -2527,6 +2616,7 @@ export type GlobalOmitConfig = {
   invoice?: Prisma.InvoiceOmit
   lawyer?: Prisma.LawyerOmit
   lawyerNote?: Prisma.LawyerNoteOmit
+  lawyerReview?: Prisma.LawyerReviewOmit
   legalDocument?: Prisma.LegalDocumentOmit
   payment?: Prisma.PaymentOmit
   schedule?: Prisma.ScheduleOmit

@@ -6,6 +6,7 @@ import httpStatus from "http-status";
 import path from "path";
 
 import {
+	AppointmentStatus,
 	LawyerVerificationStatus,
 	Role,
 	ScheduleStatus,
@@ -13,6 +14,7 @@ import {
 	UserStatus,
 } from "../../../../prisma/generated/prisma/enums";
 import type { LawyerWhereInput } from "../../../../prisma/generated/prisma/models";
+import { Prisma } from "../../../../prisma/generated/prisma/client";
 
 import config from "../../config";
 import { IQuery } from "../../interfaces";
@@ -28,6 +30,7 @@ import {
 	IApproveLawyerPayload,
 	IUpdateLawyerProfilePayload,
 	IUpdateLawyerStatusPayload,
+	ISubmitLawyerReviewPayload,
 	LawyerDocumentType,
 	IVerifyLawyerEmailPayload,
 } from "./lawyer.interface";
@@ -160,6 +163,8 @@ const applyAsLawyer = async (
 						name: payload.user.name,
 						email: payload.user.email,
 						...lawyerData,
+						averageRating: 4.0,
+						ratingCount: 1,
 						resume: resumeUploadResult.secure_url,
 						resumePublicId: resumeUploadResult.public_id,
 						additionalFiles: additionalFilesUploadResults.map((file) => ({
@@ -861,6 +866,8 @@ const getAvailableLawyerByTodaysSchedule = async (query: IQuery) => {
 			experienceYears: true,
 			bio: true,
 			consultationFee: true,
+			averageRating: true,
+			ratingCount: true,
 			createdAt: true,
 			schedules: {
 				where: {
@@ -877,17 +884,24 @@ const getAvailableLawyerByTodaysSchedule = async (query: IQuery) => {
 					id: true,
 					startDateTime: true,
 					endDateTime: true,
+					totalSlots: true,
+					availableSlots: true,
 				},
 			},
 		},
 	});
+
+	const availableLawyersWithNumericRating = availableLawyers.map((lawyer) => ({
+		...lawyer,
+		averageRating: Number(lawyer.averageRating),
+	}));
 
 	const totalAvailableLawyerCount = await prisma.lawyer.count({
 		where: { AND: andConditions },
 	});
 
 	return {
-		data: availableLawyers,
+		data: availableLawyersWithNumericRating,
 		meta: {
 			page,
 			limit,
@@ -933,6 +947,8 @@ const getAllLawyersListPublic = async (query: IQuery) => {
 				experienceYears: true,
 				bio: true,
 				consultationFee: true,
+				averageRating: true,
+				ratingCount: true,
 				createdAt: true,
 				specializations: { include: { specialization: true } },
 			},
@@ -941,8 +957,13 @@ const getAllLawyersListPublic = async (query: IQuery) => {
 		prisma.lawyer.count({ where: { AND: andConditions } }),
 	]);
 
+	const allLawyersWithNumericRating = allLawyers.map((lawyer) => ({
+		...lawyer,
+		averageRating: Number(lawyer.averageRating),
+	}));
+
 	return {
-		data: allLawyers,
+		data: allLawyersWithNumericRating,
 		meta: {
 			page,
 			limit,
@@ -953,6 +974,8 @@ const getAllLawyersListPublic = async (query: IQuery) => {
 };
 
 const getSingleLawyerPublicProfile = async (lawyerId: string) => {
+	const now = new Date();
+
 	const lawyer = await prisma.lawyer.findUnique({
 		where: {
 			id: lawyerId,
@@ -963,13 +986,47 @@ const getSingleLawyerPublicProfile = async (lawyerId: string) => {
 		select: {
 			id: true,
 			name: true,
+			address: true,
+			contactNumber: true,
 			licenseNumber: true,
 			qualifications: true,
 			experienceYears: true,
 			bio: true,
 			consultationFee: true,
+			averageRating: true,
+			ratingCount: true,
 			createdAt: true,
 			specializations: { include: { specialization: true } },
+			reviews: {
+				orderBy: { createdAt: "desc" },
+				select: {
+					id: true,
+					rating: true,
+					reviewComment: true,
+					createdAt: true,
+					user: {
+						select: {
+							name: true,
+						},
+					},
+				},
+			},
+			schedules: {
+				where: {
+					isDeleted: false,
+					status: ScheduleStatus.PUBLISHED,
+					availableSlots: { gt: 0 },
+					startDateTime: { gt: now },
+				},
+				orderBy: { startDateTime: "asc" },
+				select: {
+					id: true,
+					startDateTime: true,
+					endDateTime: true,
+					totalSlots: true,
+					availableSlots: true,
+				},
+			},
 		},
 	});
 
@@ -977,7 +1034,208 @@ const getSingleLawyerPublicProfile = async (lawyerId: string) => {
 		throw new AppError(httpStatus.NOT_FOUND, "Lawyer Not Found");
 	}
 
-	return lawyer;
+	return {
+		...lawyer,
+		averageRating: Number(lawyer.averageRating),
+		reviews: lawyer.reviews.map((review) => ({
+			id: review.id,
+			rating: review.rating,
+			comment: review.reviewComment,
+			createdAt: review.createdAt,
+			user: review.user,
+		})),
+	};
+};
+
+const getMyLawyerReviews = async (user: RequestUser) => {
+	const reviews = await prisma.lawyerReview.findMany({
+		where: {
+			userId: user.userId,
+		},
+		orderBy: { createdAt: "desc" },
+		select: {
+			id: true,
+			rating: true,
+			reviewComment: true,
+			createdAt: true,
+			lawyer: {
+				select: {
+					id: true,
+					name: true,
+				},
+			},
+		},
+	});
+
+	return reviews.map((review) => ({
+		id: review.id,
+		rating: review.rating,
+		comment: review.reviewComment,
+		createdAt: review.createdAt,
+		lawyer: review.lawyer,
+	}));
+};
+
+const submitLawyerReview = async (
+	payload: ISubmitLawyerReviewPayload,
+	user: RequestUser,
+) => {
+	if (payload.user_id !== user.userId) {
+		throw new AppError(
+			httpStatus.FORBIDDEN,
+			"You can only submit a review for your own account.",
+		);
+	}
+
+	for (let attempt = 0; attempt < 3; attempt += 1) {
+		try {
+			return await prisma.$transaction(
+				async (tx) => {
+					const lawyer = await tx.lawyer.findFirst({
+						where: {
+							id: payload.lawyer_id,
+							isDeleted: false,
+							verificationStatus: LawyerVerificationStatus.APPROVED,
+							user: {
+								isDeleted: false,
+								status: UserStatus.ACTIVE,
+							},
+						},
+						select: {
+							id: true,
+							averageRating: true,
+							ratingCount: true,
+						},
+					});
+
+					if (!lawyer) {
+						throw new AppError(httpStatus.NOT_FOUND, "Lawyer Not Found");
+					}
+
+					const client = await tx.client.findUnique({
+						where: { userId: user.userId },
+						select: { id: true, isDeleted: true },
+					});
+
+					if (!client || client.isDeleted) {
+						throw new AppError(
+							httpStatus.NOT_FOUND,
+							"Client Profile Not Found",
+						);
+					}
+
+					const now = new Date();
+					const eligibleAppointment = await tx.appointment.findFirst({
+						where: {
+							clientId: client.id,
+							lawyerId: lawyer.id,
+							OR: [
+								{ status: AppointmentStatus.COMPLETED },
+								{
+									status: AppointmentStatus.CONFIRMED,
+									schedule: {
+										endDateTime: { lt: now },
+									},
+								},
+							],
+						},
+						select: { id: true },
+					});
+
+					if (!eligibleAppointment) {
+						throw new AppError(
+							httpStatus.FORBIDDEN,
+							"Only clients with a verified appointment can submit a review.",
+						);
+					}
+
+					const existingReview = await tx.lawyerReview.findFirst({
+						where: {
+							userId: user.userId,
+							lawyerId: lawyer.id,
+						},
+						select: { id: true },
+					});
+
+					if (existingReview) {
+						throw new AppError(
+							httpStatus.CONFLICT,
+							"You have already reviewed this lawyer.",
+						);
+					}
+
+					const review = await tx.lawyerReview.create({
+						data: {
+							rating: payload.rating,
+							reviewComment: payload.review_comment,
+							userId: user.userId,
+							lawyerId: lawyer.id,
+						},
+						select: {
+							id: true,
+							rating: true,
+							reviewComment: true,
+							userId: true,
+							lawyerId: true,
+							createdAt: true,
+						},
+					});
+
+					const newRatingCount = lawyer.ratingCount + 1;
+					const newAverageRating = Number(
+						(
+							(Number(lawyer.averageRating) * lawyer.ratingCount +
+								payload.rating) /
+							newRatingCount
+						).toFixed(2),
+					);
+
+					const updatedLawyer = await tx.lawyer.update({
+						where: { id: lawyer.id },
+						data: {
+							averageRating: newAverageRating,
+							ratingCount: { increment: 1 },
+						},
+						select: {
+							averageRating: true,
+							ratingCount: true,
+						},
+					});
+
+					return {
+						averageRating: Number(updatedLawyer.averageRating),
+						ratingCount: updatedLawyer.ratingCount,
+						review,
+					};
+				},
+				{
+					isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
+					maxWait: 10000,
+					timeout: 10000,
+				},
+			);
+		} catch (error) {
+			if (error instanceof Prisma.PrismaClientKnownRequestError) {
+				if (error.code === "P2002") {
+					throw new AppError(
+						httpStatus.CONFLICT,
+						"You have already reviewed this lawyer.",
+					);
+				}
+
+				if (error.code === "P2034" && attempt < 2) {
+					continue;
+				}
+			}
+
+			throw error;
+		}
+	}
+
+	throw new AppError(
+		httpStatus.CONFLICT,
+		"Review could not be submitted due to a concurrent update. Please try again.",
+	);
 };
 
 export const LawyerServices = {
@@ -995,4 +1253,6 @@ export const LawyerServices = {
 	getAvailableLawyerByTodaysSchedule,
 	getAllLawyersListPublic,
 	getSingleLawyerPublicProfile,
+	getMyLawyerReviews,
+	submitLawyerReview,
 };

@@ -83,3 +83,18 @@ export const DeleteLawyerDocumentValidationZodSchema = z.object({
 	documentType: z.enum(["resume", "additionalFile"]),
 	publicId: z.string().min(1).optional(),
 });
+
+export const SubmitLawyerReviewValidationZodSchema = z.object({
+	rating: z.coerce
+		.number()
+		.int("Rating Must Be A Whole Number")
+		.min(1, "Rating Must Be Between 1 And 5")
+		.max(5, "Rating Must Be Between 1 And 5"),
+	review_comment: z
+		.string()
+		.trim()
+		.min(1, "Review Comment Is Required")
+		.max(2000, "Review Comment Cannot Exceed 2000 Characters"),
+	user_id: z.string().trim().min(1, "User Id Is Required"),
+	lawyer_id: z.string().trim().min(1, "Lawyer Id Is Required"),
+});
