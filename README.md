@@ -60,6 +60,9 @@ JWT_REFRESH_SECRET=replace-me
 JWT_ACCESS_EXPIRES_IN=15m
 JWT_REFRESH_EXPIRES_IN=7d
 GOOGLE_CLIENT_ID=replace-me
+GOOGLE_GENERATIVE_AI_API_KEY=replace-me
+GOOGLE_GEMINI_HIGH_MODEL=gemini-flash-lite-latest
+GOOGLE_GEMINI_LOW_MODEL=gemini-flash-latest
 
 SUPER_ADMIN_NAME=Super Admin
 SUPER_ADMIN_EMAIL=admin@example.com
@@ -146,6 +149,30 @@ The default base URL is:
 ```text
 http://localhost:5000/api/v1
 ```
+
+## AI legal intake and document review
+
+Gemini is called only by the API server. Configure `GOOGLE_GENERATIVE_AI_API_KEY`
+in the server environment; never expose it through a `NEXT_PUBLIC_` variable or
+browser code. The server tries `GOOGLE_GEMINI_HIGH_MODEL` first and falls back
+to `GOOGLE_GEMINI_LOW_MODEL` if that model is unavailable or fails. The defaults
+are `gemini-3.1-pro-preview` and `gemini-3.8-flash`; both model names can be
+changed in the server environment without a code change. The defaults avoid
+Pro models and prefer Flash Lite for free-tier development; free-tier access,
+quota, and service availability are controlled by Google and are not guaranteed
+for every project or at all times.
+
+- `POST /ai/intake` accepts `{ "prompt": "..." }` and returns a preliminary
+  legal-intake summary, likely practice area, urgency, issues, next steps, and
+  questions for an advocate.
+- `POST /ai/analyze-document` accepts `documentName`, `documentType`, and
+  pasted `documentText`, and returns a preliminary clause review. It does not
+  fetch document URLs or extract text from uploaded files.
+
+Both endpoints are currently public, matching the public intake and demo
+document-review UI. Apply appropriate rate limits and privacy/consent controls
+before production use; request text is sent to Google Gemini for processing.
+AI output is not legal advice.
 
 ## Latest Workflow
 

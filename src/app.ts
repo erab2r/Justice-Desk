@@ -26,6 +26,7 @@ import { CaseMessageRoutes } from "./app/module/caseMessage/caseMessage.route";
 import { CaseReportRoutes } from "./app/module/casereport/caseReport.route";
 import { InvoiceRoutes } from "./app/module/invoice/invoice.route";
 import { LawyerNoteRoutes } from "./app/module/lawyernote/lawyerNote.route";
+import { AiRoutes } from "./app/module/ai/ai.route";
 
 const app: Application = express();
 
@@ -70,6 +71,7 @@ app.use("/api/v1/case-message", CaseMessageRoutes);
 app.use("/api/v1/case-report", CaseReportRoutes);
 app.use("/api/v1/invoice", InvoiceRoutes);
 app.use("/api/v1/lawyer-note", LawyerNoteRoutes);
+app.use("/api/v1/ai", AiRoutes);
 
 app.use("/api/v1/payment", PaymentRoutes);
 
